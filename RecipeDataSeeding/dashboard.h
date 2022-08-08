@@ -2,6 +2,9 @@
 #define DASHBOARD_H
 
 #include <QMainWindow>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 namespace Ui {
 class dashboard;
@@ -12,7 +15,8 @@ class dashboard : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit dashboard(QWidget *parent = nullptr);
+    explicit dashboard(QJsonObject &Obj,QWidget *parent = nullptr);
+    void displayRecipeInfo(QJsonObject &Obj);
     ~dashboard();
 
 private:

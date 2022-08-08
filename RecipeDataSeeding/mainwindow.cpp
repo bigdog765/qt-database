@@ -1,8 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "box.h"
+
 #include "dashboard.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -38,10 +41,15 @@ void MainWindow::onButtonClick(){
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     qDebug() << button->objectName();
     int id = getRecipeId(button->objectName());
-    QString json = getRecipeContent(id);
+    QString result = getRecipeContent(id);
+
+    //setup qt json libraries
+    QJsonDocument doc = QJsonDocument::fromJson(result.toUtf8());
+    QJsonObject jObj = doc.object();
+
 
     //link new window
-    dashboard *dash = new dashboard;
+    dashboard *dash = new dashboard(jObj);
     dash->show();
 
 }
@@ -87,22 +95,12 @@ int MainWindow::getRecipeId(QString name){
 }
 QString MainWindow::getRecipeContent(int id){
 
-    const QByteArray API_KEY = "81e81ac3e7c14d2b9913ceebbbb4025a";
-
-
-    QByteArray url2 = QString::number(id).toUtf8();
-
-
-    const QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/";
-
+    const QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=81e81ac3e7c14d2b9913ceebbbb4025a&includeNutrition=true";
 
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
 
     food_request.setRawHeader("Content-Type", "application/json");
-    //food_request.setRawHeader("apiKey", API_KEY);
-
-
 
 
     QNetworkAccessManager *manager = new QNetworkAccessManager();
@@ -113,8 +111,9 @@ QString MainWindow::getRecipeContent(int id){
                          &loop,
                          SLOT(quit()));
 
-        QByteArray dataString = "{ \"id\": \""+ url2 +"\" }";
-        QNetworkReply* reply = manager->post(food_request, dataString);
+
+
+        QNetworkReply* reply = manager->get(food_request);
         loop.exec();
         QString response = (QString)reply->readAll();
         qDebug() << "Response: " + response;

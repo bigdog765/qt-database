@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>941</width>
+    <height>673</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,8 +37,8 @@
      <rect>
       <x>10</x>
       <y>90</y>
-      <width>741</width>
-      <height>431</height>
+      <width>891</width>
+      <height>541</height>
      </rect>
     </property>
     <property name="title">
@@ -47,15 +47,15 @@
     <widget class="QPushButton" name="pushButton1">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>20</y>
-       <width>160</width>
-       <height>160</height>
+       <x>10</x>
+       <y>60</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -63,7 +63,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:kalesalad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -72,10 +72,10 @@
     <widget class="QPushButton" name="pushButton2">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>20</y>
-       <width>160</width>
-       <height>160</height>
+       <x>220</x>
+       <y>60</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -86,7 +86,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -94,7 +94,9 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image: url(:chili.jpg);
+
+</string>
      </property>
      <property name="text">
       <string>Healthy Chili with Beans</string>
@@ -103,15 +105,21 @@
     <widget class="QPushButton" name="pushButton3">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>20</y>
-       <width>160</width>
-       <height>160</height>
+       <x>430</x>
+       <y>60</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -119,24 +127,24 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:macpasta.jpg);</string>
      </property>
      <property name="text">
-      <string>Simple Kale Salad</string>
+      <string>Macaroni Pasta w/ Tomatoes, Zucchini</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton4">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>20</y>
-       <width>160</width>
-       <height>160</height>
+       <x>650</x>
+       <y>70</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -144,24 +152,24 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:pancakes.jpg);</string>
      </property>
      <property name="text">
-      <string>Simple Kale Salad</string>
+      <string>Healthy Blueberry Lemon Pancakes</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton5">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>210</y>
-       <width>160</width>
-       <height>160</height>
+       <x>10</x>
+       <y>300</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -169,24 +177,24 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:tomatosoup.jpg);</string>
      </property>
      <property name="text">
-      <string>Simple Kale Salad</string>
+      <string>Tomato Basil Soup</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton6">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>210</y>
-       <width>160</width>
-       <height>160</height>
+       <x>220</x>
+       <y>300</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -194,24 +202,24 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:quiche.jpg);</string>
      </property>
      <property name="text">
-      <string>Simple Kale Salad</string>
+      <string>Spinach Ham &amp; Cheese Quiche</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton7">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>210</y>
-       <width>160</width>
-       <height>160</height>
+       <x>430</x>
+       <y>300</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -219,35 +227,38 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:ramen.jpg);</string>
      </property>
      <property name="text">
-      <string>Simple Kale Salad</string>
+      <string>Homemade Creamy Ramen</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton8">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>220</y>
-       <width>160</width>
-       <height>160</height>
+       <x>650</x>
+       <y>300</y>
+       <width>200</width>
+       <height>200</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <pointsize>13</pointsize>
+       <pointsize>10</pointsize>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
      </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
+      <string notr="true">border-image:url(:chickensalad.jpg);</string>
      </property>
      <property name="text">
-      <string>Simple Kale Salad</string>
+      <string>Chicken Salad with Apples and Celery</string>
      </property>
     </widget>
    </widget>
@@ -257,8 +268,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>941</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
