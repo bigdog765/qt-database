@@ -63,7 +63,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -94,7 +94,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Healthy Chili with Beans</string>
@@ -119,7 +119,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -144,7 +144,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -169,7 +169,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -194,7 +194,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -219,7 +219,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -244,7 +244,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:C:/Users/aidyv/Desktop/Photos/QtRecipe/kalesalad.jpg);</string>
+      <string notr="true">border-image:url(:qrc:/salad.jpg);</string>
      </property>
      <property name="text">
       <string>Simple Kale Salad</string>
@@ -258,7 +258,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

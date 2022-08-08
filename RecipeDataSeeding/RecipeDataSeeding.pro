@@ -11,14 +11,19 @@ CONFIG += c++17
 
 SOURCES += \
     box.cpp \
+    box.cpp \
+    dashboard.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     box.h \
+    box.h \
+    dashboard.h \
     mainwindow.h
 
 FORMS += \
+    dashboard.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -27,4 +32,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    img.qrc \
     img.qrc

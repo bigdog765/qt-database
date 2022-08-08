@@ -15,12 +15,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void getButtons();
+
 
 
     bool wasPressed(QPushButton &push);
-
-    void onButtonClick(QPushButton &push);
+    int getRecipeId(QString name);
+    QString getRecipeContent(int id);
+public slots:
+    void onButtonClick();
 
 private:
     Ui::MainWindow *ui;
