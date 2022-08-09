@@ -17,6 +17,7 @@ class dashboard : public QMainWindow
 public:
     explicit dashboard(QJsonObject &Obj,QWidget *parent = nullptr);
     void displayRecipeInfo(QJsonObject &Obj);
+    QString getTotalNutrients(QJsonObject &Obj);
     ~dashboard();
 
 private:

@@ -55,7 +55,7 @@ public:
         servingSize->setGeometry(QRect(50, 110, 181, 16));
         totalNutrition = new QLabel(centralwidget);
         totalNutrition->setObjectName(QString::fromUtf8("totalNutrition"));
-        totalNutrition->setGeometry(QRect(50, 160, 49, 16));
+        totalNutrition->setGeometry(QRect(50, 160, 681, 51));
         ingredients = new QLabel(centralwidget);
         ingredients->setObjectName(QString::fromUtf8("ingredients"));
         ingredients->setGeometry(QRect(50, 220, 49, 16));
