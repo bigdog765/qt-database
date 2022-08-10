@@ -58,7 +58,9 @@ public:
         totalNutrition->setGeometry(QRect(50, 160, 681, 51));
         ingredients = new QLabel(centralwidget);
         ingredients->setObjectName(QString::fromUtf8("ingredients"));
-        ingredients->setGeometry(QRect(50, 220, 49, 16));
+        ingredients->setGeometry(QRect(50, 220, 631, 61));
+        ingredients->setScaledContents(true);
+        ingredients->setWordWrap(true);
         prepTime = new QLabel(centralwidget);
         prepTime->setObjectName(QString::fromUtf8("prepTime"));
         prepTime->setGeometry(QRect(50, 130, 161, 16));
@@ -83,7 +85,7 @@ public:
         recipeName->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
         servingSize->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
         totalNutrition->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
-        ingredients->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
+        ingredients->setText(QCoreApplication::translate("dashboard", "<html><head/><body><p>TextLabel</p></body></html>", nullptr));
         prepTime->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
     } // retranslateUi
 

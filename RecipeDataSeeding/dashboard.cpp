@@ -1,10 +1,16 @@
 #include "dashboard.h"
 #include "ui_dashboard.h"
+#include "mainwindow.h"
+#include "walkthrough.h"
 
-dashboard::dashboard(QJsonObject &Obj,QWidget *parent) :QMainWindow(parent),ui(new Ui::dashboard)
+dashboard::dashboard(QJsonObject &Obj,int recipeID,QWidget *parent) :QMainWindow(parent),ui(new Ui::dashboard)
 {
+    this->recipeID = recipeID;
+    steps = new QJsonArray();
+
     ui->setupUi(this);
     displayRecipeInfo(Obj);
+
 }
 
 void dashboard::displayRecipeInfo(QJsonObject &Obj)
@@ -14,20 +20,26 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     int prep;
     int serving;
     QString nutrition;
+    QString ingredients;
+
+    //nutrition{nutrients[{Calories,fat,etc.}{Calories,fat,etc.}]} Mainobj->obj->array->obj
     for(auto i = Obj.begin(); i != Obj.end();i++){ 
-        if(i.key().toUtf8() == "nutrition"){
+        if(i.key().toUtf8() == "nutrition"){ //nutrition key is an object
             QJsonObject nutrObj = i->toObject();
             nutrition = getTotalNutrients(nutrObj);
         }
-        if(i->isArray()){
-            qDebug() << "Array.";
-            //break array down
+        else if(i.key().toUtf8() == "extendedIngredients"){ //extended ingredient key is an array
+            QJsonArray ingrArr = i->toArray();
+            ingredients = getIngredients(ingrArr);
         }
-        else if(!i->isArray()){
+        else if(i.key().toUtf8() == "analyzedInstructions"){
+            QJsonArray steps = i->toArray();
+            setSteps(steps);
+        }
+        else {
 
             //q is the key
             QString q = i.key().toUtf8();
-            qDebug() << "Not array. " + q;
 
             //fetch relevant keys
             if(q == "title"){
@@ -51,6 +63,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     ui->servingSize->setText("Servings: " + QString::number(serving));
     ui->prepTime->setText("Time to Complete: " + QString::number(prep) + " min");
     ui->totalNutrition->setText(nutrition);
+    ui->ingredients->setText(ingredients);
 }
 
 QString dashboard::getTotalNutrients(QJsonObject &Obj)
@@ -63,18 +76,14 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
             nutrients = i->toArray();
             break;
         }
-
     }
-
-    qDebug() << "******************";
-    qDebug() << nutrients.size();
-
     bool skip = true;
     double amount;
     QString unit;
     QString result = "Total Nutrients: ";
+
+    //json file parses keys in althebetical order
     for(auto j = nutrients.begin(); j != nutrients.end();j++){
-        qDebug() << "hello";
 
         QJsonObject f;
         f =j->toObject();
@@ -108,7 +117,7 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
 
         }
         if(!skip){
-            qDebug() << "TESTTT";
+
             result.append(QString::number(amount) + unit + " ");
             skip = true;
         }
@@ -118,7 +127,53 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
 
 }
 
+QString dashboard::getIngredients(QJsonArray &arr)
+{
+    QString result = "Ingredients: ";
+    QString name,unit;
+    double amount;
+    for(auto i = arr.begin(); i != arr.end();i++){
+
+        QJsonObject f;
+        f =i->toObject();
+        for(auto j = f.begin(); j != f.end();j++){
+            if(j.key() == "name"){
+                name = j.value().toString();
+
+            }
+            else if(j.key() == "amount"){
+                amount = j.value().toDouble();
+            }
+            else if(j.key() == "unit"){
+                unit = j.value().toString();
+            }
+        }
+        result.append(QString::number(amount) + " " + unit + " " + name + ", ");
+    }
+
+    return result;
+}
+
+int dashboard::getRecipeID()
+{
+    return recipeID;
+}
+
+void dashboard::setSteps(QJsonArray &stepArr)
+{
+    steps = new QJsonArray(stepArr);
+}
+
 dashboard::~dashboard()
 {
     delete ui;
 }
+
+void dashboard::on_start_clicked()
+{
+
+    //link new window
+    walkthrough *walk = new walkthrough(*steps,recipeID);
+    walk->show();
+}
+

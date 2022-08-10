@@ -15,13 +15,22 @@ class dashboard : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit dashboard(QJsonObject &Obj,QWidget *parent = nullptr);
+    explicit dashboard(QJsonObject &Obj,int recipeID,QWidget *parent = nullptr);
     void displayRecipeInfo(QJsonObject &Obj);
     QString getTotalNutrients(QJsonObject &Obj);
+    QString getIngredients(QJsonArray &arr);
+    int getRecipeID();
+    void setSteps(QJsonArray &stepArr);
     ~dashboard();
+
+private slots:
+    void on_start_clicked();
 
 private:
     Ui::dashboard *ui;
+    int recipeID;
+    QJsonArray *steps;
+
 };
 
 #endif // DASHBOARD_H

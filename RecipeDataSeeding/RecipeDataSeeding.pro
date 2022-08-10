@@ -12,15 +12,18 @@ CONFIG += c++17
 SOURCES += \
     dashboard.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    walkthrough.cpp
 
 HEADERS += \
     dashboard.h \
-    mainwindow.h
+    mainwindow.h \
+    walkthrough.h
 
 FORMS += \
     dashboard.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    walkthrough.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

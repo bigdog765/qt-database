@@ -20,8 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     QGroupBox *group = ui->groupBox;
 
     QList<QPushButton*> allPButtons = group->findChildren<QPushButton*>();
-    //QPushButton *B = new QPushButton(this);
-    //connect(allPButtons.at(0), &QPushButton::released, this, &MainWindow::onButtonClick);
+
 
     for(int i=0;i< allPButtons.size();i++){
         connect(allPButtons.at(i),SIGNAL(clicked()),this,SLOT(onButtonClick()));
@@ -49,7 +48,7 @@ void MainWindow::onButtonClick(){
 
 
     //link new window
-    dashboard *dash = new dashboard(jObj);
+    dashboard *dash = new dashboard(jObj,id);
     dash->show();
 
 }
@@ -95,7 +94,7 @@ int MainWindow::getRecipeId(QString name){
 }
 QString MainWindow::getRecipeContent(int id){
 
-    const QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=81e81ac3e7c14d2b9913ceebbbb4025a&includeNutrition=true";
+    QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=81e81ac3e7c14d2b9913ceebbbb4025a&includeNutrition=true";
 
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
