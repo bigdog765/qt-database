@@ -14,6 +14,8 @@ class walkthrough : public QMainWindow
 public:
     explicit walkthrough(QJsonArray &steps,int recipeID,QWidget *parent = nullptr);
     ~walkthrough();
+    void printSteps(QJsonArray &steps);
+    void setupButtons(int number);
 
 private:
     Ui::walkthrough *ui;
