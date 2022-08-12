@@ -2,6 +2,7 @@
 #define WALKTHROUGH_H
 
 #include <QMainWindow>
+#include <QBoxLayout>
 
 namespace Ui {
 class walkthrough;
@@ -14,8 +15,11 @@ class walkthrough : public QMainWindow
 public:
     explicit walkthrough(QJsonArray &steps,int recipeID,QWidget *parent = nullptr);
     ~walkthrough();
-    void printSteps(QJsonArray &steps);
-    void setupButtons(int number);
+    int printSteps(QJsonArray &steps);
+    QVBoxLayout* setupButtons(int number);
+    void setupPages(int number);
+public slots:
+    void onPageClick();
 
 private:
     Ui::walkthrough *ui;

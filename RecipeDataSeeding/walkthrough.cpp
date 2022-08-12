@@ -9,7 +9,28 @@ walkthrough::walkthrough(QJsonArray &steps,int recipeID,QWidget *parent) :
     ui(new Ui::walkthrough)
 {
     ui->setupUi(this);
-    printSteps(steps);
+
+    //number of steps
+    int numP = printSteps(steps);
+
+
+    //the layout w/ buttons
+    QVBoxLayout* lay = setupButtons(numP);
+
+    //setupPages(numP);
+
+    //this creates a list of buttons from the layout
+    QList<QPushButton*> listB = lay->parentWidget()->findChildren<QPushButton*>();
+    qDebug() << listB.size();
+
+
+
+    for(int i=0;i< numP;i++){
+        qDebug() << listB.at(i)->objectName();
+        connect(listB.at(i),SIGNAL(clicked()),this,SLOT(onPageClick()));
+
+    }
+
 }
 
 walkthrough::~walkthrough()
@@ -17,7 +38,7 @@ walkthrough::~walkthrough()
     delete ui;
 }
 
-void walkthrough::printSteps(QJsonArray &steps)
+int walkthrough::printSteps(QJsonArray &steps)
 {
     QString totalStepsString;
     //get 'steps' array, stores in g
@@ -49,20 +70,58 @@ void walkthrough::printSteps(QJsonArray &steps)
             }
         }
     }
-    setupButtons(ctr);
-    ui->steps->setText(totalStepsString);
+
+
+
+
+
+    qDebug() << totalStepsString;
+    //ui->steps->setText(totalStepsString);
+    qDebug() << "totalStepsString";
+    return ctr;
 
 }
 
-void walkthrough::setupButtons(int number)
+QVBoxLayout* walkthrough::setupButtons(int number)
 {
-    QVBoxLayout* layout = ui->verticalLayout;
+    //create a dummy parent for the layout
+    QWidget *parent = new QWidget();
+
+    QVBoxLayout* layout = ui->verticalLayout; //this gets deleted after function return (might need to declare as member variable)
+
+    layout->setParent(parent);
+
 
     for(int i = 1; i <= number;i++){
          QString buttonText = "Step " + QString::number(i);
          QPushButton* button = new QPushButton(buttonText, ui->verticalLayoutWidget);
+         //insert buttons into the layout depending on how many steps
          layout->insertWidget(i, button);
+         qDebug() << "Button added";
 
     }
+    qDebug() << layout->count();
+    for(int j = 0; j < layout->count(); j++){
+        qDebug() << layout->itemAt(j);
+    }
 
+    //returns the layout with all the buttons
+    return layout;
+
+}
+
+void walkthrough::setupPages(int number)
+{
+    for(int i =0;i < number; i++){
+        QWidget *pageWidget = new QWidget();
+        pageWidget->setObjectName("page " + QString::number(i+2));
+        ui->stackedWidget->insertWidget(0,pageWidget);
+    }
+}
+
+void walkthrough::onPageClick()
+{
+    qDebug() << "test";
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    qDebug() << button->objectName();
 }
