@@ -3,30 +3,38 @@
 #include "QJsonArray"
 #include "QJsonObject"
 #include "QPushButton"
+#include "QLabel"
 
 walkthrough::walkthrough(QJsonArray &steps,int recipeID,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::walkthrough)
 {
     ui->setupUi(this);
+    layout = ui->verticalLayout;
+    recipeID = this->recipeID;
 
-    //number of steps
-    int numP = printSteps(steps);
+    QList<QString> *listOfSteps = new QList<QString>;
+    listOfSteps = setupSteps(steps);
 
 
-    //the layout w/ buttons
-    QVBoxLayout* lay = setupButtons(numP);
+    setupPages(numOfSteps, listOfSteps);
+    setupButtons(numOfSteps);
 
-    //setupPages(numP);
+    //make a dummy parent for the layout
+    QWidget *parentL = new QWidget(ui->verticalLayoutWidget);
 
-    //this creates a list of buttons from the layout
-    QList<QPushButton*> listB = lay->parentWidget()->findChildren<QPushButton*>();
+    //now we can display the layout
+    parentL->setLayout(layout);
+    parentL->show();
+
+    //create an array of buttons from the layout so we can implement each button click
+    QList<QPushButton*> listB = layout->parentWidget()->findChildren<QPushButton*>();
     qDebug() << listB.size();
 
 
 
-    for(int i=0;i< numP;i++){
-        qDebug() << listB.at(i)->objectName();
+    for(int i=0;i< numOfSteps;i++){
+        qDebug() << (*listB.at(i)).objectName();
         connect(listB.at(i),SIGNAL(clicked()),this,SLOT(onPageClick()));
 
     }
@@ -38,9 +46,12 @@ walkthrough::~walkthrough()
     delete ui;
 }
 
-int walkthrough::printSteps(QJsonArray &steps)
+QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 {
     QString totalStepsString;
+    QList<QString> *listSteps = new QList<QString>;
+
+
     //get 'steps' array, stores in g
     QJsonArray g;
     for(auto i = steps.begin(); i != steps.end(); i++){
@@ -62,66 +73,87 @@ int walkthrough::printSteps(QJsonArray &steps)
             if(l.key().toUtf8() == "number"){
                 int s = l.value().toInt();
                 totalStepsString.append("Step " + QString::number(s) + ": ");
+
+                //this gets total number of steps
                 ctr++;
             }
             else if(l.key().toUtf8() == "step"){
                 QString txt = l.value().toString();
                 totalStepsString.append(txt);
+
+                //inserts each step into a string list
+                listSteps->append(txt);
             }
         }
     }
 
+    setSteps(ctr);
 
-
-
-
+    //this will show the whole instruction list
     qDebug() << totalStepsString;
-    //ui->steps->setText(totalStepsString);
-    qDebug() << "totalStepsString";
-    return ctr;
+
+    return listSteps;
 
 }
 
-QVBoxLayout* walkthrough::setupButtons(int number)
+void walkthrough::setupButtons(int number)
 {
-    //create a dummy parent for the layout
-    QWidget *parent = new QWidget();
-
-    QVBoxLayout* layout = ui->verticalLayout; //this gets deleted after function return (might need to declare as member variable)
-
-    layout->setParent(parent);
-
 
     for(int i = 1; i <= number;i++){
-         QString buttonText = "Step " + QString::number(i);
+         QString buttonText = "Step " + QString::number(number - i + 1);
          QPushButton* button = new QPushButton(buttonText, ui->verticalLayoutWidget);
+         button->setObjectName("step" + QString::number(i));
          //insert buttons into the layout depending on how many steps
-         layout->insertWidget(i, button);
+         layout->insertWidget(0, button);
          qDebug() << "Button added";
 
     }
-    qDebug() << layout->count();
-    for(int j = 0; j < layout->count(); j++){
-        qDebug() << layout->itemAt(j);
-    }
-
-    //returns the layout with all the buttons
-    return layout;
-
 }
 
-void walkthrough::setupPages(int number)
+void walkthrough::setupPages(int number, QList<QString> *&s)
 {
+
     for(int i =0;i < number; i++){
-        QWidget *pageWidget = new QWidget();
-        pageWidget->setObjectName("page " + QString::number(i+2));
+        QWidget *pageWidget = new QWidget(ui->stackedWidget);
+        pageWidget->setObjectName("page " + QString::number(i+1));
+
+        QLabel *lblPage = new QLabel(pageWidget);
+        QLabel *lblStep = new QLabel(pageWidget);
+        lblPage->setObjectName("label" + QString::number(i+1));
+        lblPage->setText("Page " + QString::number(i+1));
+
+        lblStep->setObjectName("step " + QString::number(i+1));
+        //get specific step index and insert into page label
+        lblStep->setText(s->at(i));
+        lblStep->setGeometry(50,150,570,280);
+        lblStep->setAlignment(Qt::AlignTop);
+        lblStep->setWordWrap(true);
+
+        //add specific page to stack
         ui->stackedWidget->insertWidget(0,pageWidget);
+
+        qDebug() << "Page inserted";
+
     }
+}
+
+void walkthrough::setSteps(int s)
+{
+    numOfSteps = s;
+}
+
+int walkthrough::getSteps()
+{
+    return numOfSteps;
 }
 
 void walkthrough::onPageClick()
 {
-    qDebug() << "test";
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     qDebug() << button->objectName();
+    QChar number = button->objectName().back();
+    int a = number.digitValue();
+    ui->stackedWidget->setCurrentIndex(a-1);
+
+
 }

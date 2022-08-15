@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
-    <height>645</height>
+    <width>866</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,41 +27,16 @@
      <string notr="true">background-color: rgb(136, 136, 136)</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>-1</number>
     </property>
-    <widget class="QWidget" name="page">
-     <widget class="QLabel" name="steps">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>611</width>
-        <height>321</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Yu Gothic</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="page_2"/>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>710</x>
       <y>20</y>
-      <width>101</width>
-      <height>471</height>
+      <width>131</width>
+      <height>491</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -86,8 +61,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>819</width>
-     <height>21</height>
+     <width>866</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

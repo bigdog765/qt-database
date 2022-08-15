@@ -645,6 +645,12 @@ debug\moc_walkthrough.cpp: ..\RecipeDataSeeding\walkthrough.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\QTransform \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qnativeinterface.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qtabwidget.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QBoxLayout \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qboxlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlayoutitem.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qgridlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QVBoxLayout \
 		debug\moc_predefs.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\bin\moc.exe
 	E:\QtOpenSource\6.3.1\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include E:/Programming/Git/qt-database/build-RecipeDataSeeding-Desktop_Qt_6_3_1_MSVC2019_64bit-Debug/debug/moc_predefs.h -IE:/QtOpenSource/6.3.1/msvc2019_64/mkspecs/win32-msvc -IE:/Programming/Git/qt-database/RecipeDataSeeding -IE:/QtOpenSource/6.3.1/msvc2019_64/include -IE:/QtOpenSource/6.3.1/msvc2019_64/include/QtWidgets -IE:/QtOpenSource/6.3.1/msvc2019_64/include/QtGui -IE:/QtOpenSource/6.3.1/msvc2019_64/include/QtNetwork -IE:/QtOpenSource/6.3.1/msvc2019_64/include/QtCore -I. -I"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\ATLMFC\include" -I"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.19041.0\\shared" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.19041.0\\um" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.19041.0\\winrt" -I"C:\Program Files (x86)\Windows Kits\10\\include\10.0.19041.0\\cppwinrt" ..\RecipeDataSeeding\walkthrough.h -o debug\moc_walkthrough.cpp
@@ -833,7 +839,14 @@ debug\dashboard.obj: ..\RecipeDataSeeding\dashboard.cpp ..\RecipeDataSeeding\das
 		..\RecipeDataSeeding\mainwindow.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QPushButton \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h \
+		..\RecipeDataSeeding\walkthrough.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QBoxLayout \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qboxlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlayoutitem.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qgridlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QVBoxLayout
 
 debug\main.obj: ..\RecipeDataSeeding\main.cpp ..\RecipeDataSeeding\mainwindow.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QMainWindow \
@@ -1358,7 +1371,28 @@ debug\walkthrough.obj: ..\RecipeDataSeeding\walkthrough.cpp ..\RecipeDataSeeding
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\QTransform \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qnativeinterface.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qtabwidget.h \
-		ui_walkthrough.h
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QBoxLayout \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qboxlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlayoutitem.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qgridlayout.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QVBoxLayout \
+		ui_walkthrough.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QJsonArray \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonarray.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonvalue.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcborvalue.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qdatetime.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcalendar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qlocale.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcborcommon.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qregularexpression.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\quuid.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QJsonObject \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonobject.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QPushButton \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qpushbutton.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h
 
 debug\qrc_img.obj: debug\qrc_img.cpp 
 

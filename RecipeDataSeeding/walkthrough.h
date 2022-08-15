@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QBoxLayout>
+#include <QVBoxLayout>
 
 namespace Ui {
 class walkthrough;
@@ -15,14 +16,19 @@ class walkthrough : public QMainWindow
 public:
     explicit walkthrough(QJsonArray &steps,int recipeID,QWidget *parent = nullptr);
     ~walkthrough();
-    int printSteps(QJsonArray &steps);
-    QVBoxLayout* setupButtons(int number);
-    void setupPages(int number);
+    QList<QString>* setupSteps(QJsonArray &steps);
+    void setupButtons(int number);
+    void setupPages(int number, QList<QString> *&s);
+    void setSteps(int s);
+    int getSteps();
 public slots:
     void onPageClick();
 
 private:
     Ui::walkthrough *ui;
+    int recipeID;
+    QVBoxLayout *layout;
+    int numOfSteps;
 };
 
 #endif // WALKTHROUGH_H
