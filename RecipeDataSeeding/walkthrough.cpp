@@ -5,13 +5,13 @@
 #include "QPushButton"
 #include "QLabel"
 
-walkthrough::walkthrough(QJsonArray &steps,int recipeID,QWidget *parent) :
+walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::walkthrough)
 {
     ui->setupUi(this);
     layout = ui->verticalLayout;
-    recipeID = this->recipeID;
+    recipeID = id;
 
     QList<QString> *listOfSteps = new QList<QString>;
     listOfSteps = setupSteps(steps);
@@ -66,12 +66,13 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 
     //print out each step
     int ctr = 0;
+    int s;
     for(auto k = g.begin(); k != g.end(); k++){
         QJsonObject h;
         h = k->toObject();
         for(auto l = h.begin(); l != h.end(); l++){
             if(l.key().toUtf8() == "number"){
-                int s = l.value().toInt();
+                s = l.value().toInt();
                 totalStepsString.append("Step " + QString::number(s) + ": ");
 
                 //this gets total number of steps
@@ -79,10 +80,24 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
             }
             else if(l.key().toUtf8() == "step"){
                 QString txt = l.value().toString();
-                totalStepsString.append(txt);
+
+                QList<QString> *t = splitInstruction(txt,s);
+
+                if(!t){
+                    totalStepsString.append(txt);
+                    listSteps->append(txt);
+                }
+                else{
+
+                    totalStepsString.append(t->at(0));
+                    totalStepsString.append(t->at(1));
+                    listSteps->append(t->at(0));
+                    listSteps->append(t->at(1));
+                    ctr++;
+                }
 
                 //inserts each step into a string list
-                listSteps->append(txt);
+
             }
         }
     }
@@ -147,6 +162,8 @@ int walkthrough::getSteps()
     return numOfSteps;
 }
 
+
+
 void walkthrough::onPageClick()
 {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
@@ -157,3 +174,100 @@ void walkthrough::onPageClick()
 
 
 }
+
+//this function will manually split certain instruction strings that are too long
+//instructions that need to be split:
+//kale 1,2
+//chili 4
+//mac 4
+//muffin 3
+//basil 2,5
+//quiche 2
+QList<QString>* walkthrough::splitInstruction(QString &s, int q)
+{
+    //ids of 6 recipes that need to be split
+    int idArr[6] = {660108,646567,643642,1096070,1096214,661249};
+    bool tooLong = false;
+
+    int i;
+    for(i=0; i < 6; i++){
+        if(recipeID == idArr[i]){
+            tooLong = true;
+            break;
+        }
+    }
+    if(!tooLong)
+        return nullptr;
+    else{
+        if(i == 0){ //kale salad
+            qDebug() << q;
+            if(q == 1 || q == 2){
+                 return split(s);
+            }
+            else{
+                return nullptr;
+            }
+        }
+        if(i == 1){ //chili
+            if(q == 4){
+                return split(s);
+            }
+            else{
+                return nullptr;
+            }
+        }
+        if(i == 2){ //mac
+            if(q == 4){
+                return split(s);
+            }
+            else{
+                return nullptr;
+            }
+        }
+        if(i == 3){ //muffin
+            if(q == 3){
+                return split(s);
+            }
+            else{
+                return nullptr;
+            }
+        }
+        if(i == 4){ //basil
+            if(q == 2 || q == 5){
+                return split(s);
+            }
+            else{
+                return nullptr;
+            }
+        }
+        if(i == 5){ //quiche
+            if(q == 2){
+                return split(s);
+            }
+            else{
+                return nullptr;
+            }
+        }
+        else{
+            return nullptr;
+        }
+
+    }
+}
+QList<QString>* walkthrough::split(QString &s){
+    QString per = ".";
+    QList<QString> *splitStrings = new QList<QString>(2);
+    int mid = s.length() /2;
+
+    int ind = s.indexOf(per,mid) + 1;  //quiche has a bug here
+    QString one = s.left(ind);
+    int last = s.length() - ind;
+    QString two = s.right(last);
+    qDebug() << "****SPLIT STRING:::" + one + "***********"+ two;
+    splitStrings->insert(0,one);
+    splitStrings->insert(1, two);
+    return splitStrings;
+}
+
+
+

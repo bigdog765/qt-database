@@ -152,10 +152,10 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image:url(:pancakes.jpg);</string>
+      <string notr="true">border-image:url(:muffin.jpg);</string>
      </property>
      <property name="text">
-      <string>Healthy Blueberry Lemon Pancakes</string>
+      <string>Healthy Morning Glory Muffins</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton5">

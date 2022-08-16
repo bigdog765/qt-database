@@ -48,6 +48,7 @@ void MainWindow::onButtonClick(){
 
 
     //link new window
+
     dashboard *dash = new dashboard(jObj,id);
     dash->show();
 
@@ -67,9 +68,9 @@ int MainWindow::getRecipeId(QString name){
     else if(name.endsWith('3')){
         id = 643642;
     }
-    //button4 = Pancakes = 646443
+    //button4 = Muffins = 646443
     else if(name.endsWith('4')){
-        id = 646443;
+        id = 1096070;
     }
     //button5 = Tomato Soup = 1096214
     else if(name.endsWith('5')){

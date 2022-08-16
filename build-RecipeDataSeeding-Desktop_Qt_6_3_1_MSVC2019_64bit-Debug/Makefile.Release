@@ -187,7 +187,7 @@ release\qrc_img.cpp: ..\RecipeDataSeeding\img.qrc \
 		..\RecipeDataSeeding\tomatosoup.jpg \
 		..\RecipeDataSeeding\macpasta.jpg \
 		..\RecipeDataSeeding\ramen.jpg \
-		..\RecipeDataSeeding\pancakes.jpg \
+		..\RecipeDataSeeding\muffin.jpg \
 		..\RecipeDataSeeding\quiche.jpg \
 		..\RecipeDataSeeding\chickensalad.jpg \
 		..\RecipeDataSeeding\chili.jpg
@@ -199,7 +199,7 @@ release\qrc_img.cpp: ..\RecipeDataSeeding\img.qrc \
 		..\RecipeDataSeeding\tomatosoup.jpg \
 		..\RecipeDataSeeding\macpasta.jpg \
 		..\RecipeDataSeeding\ramen.jpg \
-		..\RecipeDataSeeding\pancakes.jpg \
+		..\RecipeDataSeeding\muffin.jpg \
 		..\RecipeDataSeeding\quiche.jpg \
 		..\RecipeDataSeeding\chickensalad.jpg \
 		..\RecipeDataSeeding\chili.jpg
@@ -835,10 +835,42 @@ release\dashboard.obj: ..\RecipeDataSeeding\dashboard.cpp ..\RecipeDataSeeding\d
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QJsonArray \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonarray.h \
 		ui_dashboard.h \
-		..\RecipeDataSeeding\mainwindow.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QVariant \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QApplication \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcoreapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qeventloop.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcoreapplication_platform.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfuture.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfutureinterface.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qmutex.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qresultstore.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfuture_impl.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qthreadpool.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qthread.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qdeadlinetimer.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qelapsedtimer.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qrunnable.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qexception.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qpromise.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qguiapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qinputmethod.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qguiapplication_platform.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QLabel \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlabel.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qframe.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qpicture.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qtextdocument.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QMenuBar \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qmenubar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qmenu.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QPushButton \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qpushbutton.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QStatusBar \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qstatusbar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QWidget \
+		..\RecipeDataSeeding\mainwindow.h \
 		..\RecipeDataSeeding\walkthrough.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QBoxLayout \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qboxlayout.h \
@@ -1191,6 +1223,41 @@ release\mainwindow.obj: ..\RecipeDataSeeding\mainwindow.cpp ..\RecipeDataSeeding
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qpushbutton.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h \
 		ui_mainwindow.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QVariant \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QApplication \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcoreapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qeventloop.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcoreapplication_platform.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfuture.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfutureinterface.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qmutex.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qresultstore.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfuture_impl.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qthreadpool.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qthread.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qdeadlinetimer.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qelapsedtimer.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qrunnable.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qexception.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qpromise.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qguiapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qinputmethod.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qlocale.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qguiapplication_platform.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QGroupBox \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qgroupbox.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qframe.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QLabel \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlabel.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qpicture.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qtextdocument.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QMenuBar \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qmenubar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qmenu.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QStatusBar \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qstatusbar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QWidget \
 		..\RecipeDataSeeding\dashboard.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QJsonDocument \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsondocument.h \
@@ -1198,7 +1265,6 @@ release\mainwindow.obj: ..\RecipeDataSeeding\mainwindow.cpp ..\RecipeDataSeeding
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcborvalue.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qdatetime.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcalendar.h \
-		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qlocale.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcborcommon.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qregularexpression.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\quuid.h \
@@ -1215,7 +1281,6 @@ release\mainwindow.obj: ..\RecipeDataSeeding\mainwindow.cpp ..\RecipeDataSeeding
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QSharedDataPointer \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QString \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QUrl \
-		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QVariant \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtNetwork\QSslConfiguration \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtNetwork\qsslconfiguration.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtNetwork\qsslsocket.h \
@@ -1377,13 +1442,44 @@ release\walkthrough.obj: ..\RecipeDataSeeding\walkthrough.cpp ..\RecipeDataSeedi
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qgridlayout.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QVBoxLayout \
 		ui_walkthrough.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QVariant \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QApplication \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcoreapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qeventloop.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcoreapplication_platform.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfuture.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfutureinterface.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qmutex.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qresultstore.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qfuture_impl.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qthreadpool.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qthread.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qdeadlinetimer.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qelapsedtimer.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qrunnable.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qexception.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qpromise.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qguiapplication.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qinputmethod.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qlocale.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qguiapplication_platform.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QMenuBar \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qmenubar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qmenu.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QSpacerItem \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QStackedWidget \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qstackedwidget.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qframe.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QStatusBar \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qstatusbar.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QWidget \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\QJsonArray \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonarray.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonvalue.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcborvalue.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qdatetime.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcalendar.h \
-		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qlocale.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qcborcommon.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qregularexpression.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\quuid.h \
@@ -1391,7 +1487,11 @@ release\walkthrough.obj: ..\RecipeDataSeeding\walkthrough.cpp ..\RecipeDataSeedi
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtCore\qjsonobject.h \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QPushButton \
 		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qabstractbutton.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\QLabel \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtWidgets\qlabel.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qpicture.h \
+		..\..\..\..\QtOpenSource\6.3.1\msvc2019_64\include\QtGui\qtextdocument.h
 
 release\qrc_img.obj: release\qrc_img.cpp 
 

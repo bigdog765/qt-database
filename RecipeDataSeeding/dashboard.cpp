@@ -3,13 +3,16 @@
 #include "mainwindow.h"
 #include "walkthrough.h"
 
-dashboard::dashboard(QJsonObject &Obj,int recipeID,QWidget *parent) :QMainWindow(parent),ui(new Ui::dashboard)
+dashboard::dashboard(QJsonObject &Obj,int id,QWidget *parent) :QMainWindow(parent),ui(new Ui::dashboard)
 {
-    this->recipeID = recipeID;
+
+
+    recipeID = id;
     steps = new QJsonArray();
 
     ui->setupUi(this);
     displayRecipeInfo(Obj);
+
 
 }
 

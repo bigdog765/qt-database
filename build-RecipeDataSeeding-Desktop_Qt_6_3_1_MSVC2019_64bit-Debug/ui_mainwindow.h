@@ -89,7 +89,7 @@ public:
         pushButton4->setGeometry(QRect(650, 70, 200, 200));
         pushButton4->setFont(font1);
         pushButton4->setAutoFillBackground(false);
-        pushButton4->setStyleSheet(QString::fromUtf8("border-image:url(:pancakes.jpg);"));
+        pushButton4->setStyleSheet(QString::fromUtf8("border-image:url(:muffin.jpg);"));
         pushButton5 = new QPushButton(groupBox);
         pushButton5->setObjectName(QString::fromUtf8("pushButton5"));
         pushButton5->setGeometry(QRect(10, 300, 200, 200));
@@ -137,7 +137,7 @@ public:
         pushButton1->setText(QCoreApplication::translate("MainWindow", "Simple Kale Salad", nullptr));
         pushButton2->setText(QCoreApplication::translate("MainWindow", "Healthy Chili with Beans", nullptr));
         pushButton3->setText(QCoreApplication::translate("MainWindow", "Macaroni Pasta w/ Tomatoes, Zucchini", nullptr));
-        pushButton4->setText(QCoreApplication::translate("MainWindow", "Healthy Blueberry Lemon Pancakes", nullptr));
+        pushButton4->setText(QCoreApplication::translate("MainWindow", "Healthy Morning Glory Muffins", nullptr));
         pushButton5->setText(QCoreApplication::translate("MainWindow", "Tomato Basil Soup", nullptr));
         pushButton6->setText(QCoreApplication::translate("MainWindow", "Spinach Ham & Cheese Quiche", nullptr));
         pushButton7->setText(QCoreApplication::translate("MainWindow", "Homemade Creamy Ramen", nullptr));

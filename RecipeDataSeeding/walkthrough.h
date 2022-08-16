@@ -21,6 +21,9 @@ public:
     void setupPages(int number, QList<QString> *&s);
     void setSteps(int s);
     int getSteps();
+    QList<QString>* splitInstruction(QString &s, int q);
+    QList<QString>* split(QString &s);
+
 public slots:
     void onPageClick();
 
