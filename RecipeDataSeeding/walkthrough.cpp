@@ -259,9 +259,21 @@ QList<QString>* walkthrough::split(QString &s){
     QList<QString> *splitStrings = new QList<QString>(2);
     int mid = s.length() /2;
 
-    int ind = s.indexOf(per,mid) + 1;  //quiche has a bug here
-    QString one = s.left(ind);
-    int last = s.length() - ind;
+    //find the closest period to the middle of the string
+    int indForward = s.indexOf(per,mid) + 1 - mid;  //quiche has a bug here
+    int indBackward = mid - s.lastIndexOf(per,mid);
+    qDebug() << "INDEXES::::";
+    qDebug() << indForward;
+    qDebug() << indBackward;
+    int closest = 0;
+    if(indForward <= indBackward)
+        closest = s.indexOf(per,mid) + 1;
+    else
+        closest = s.lastIndexOf(per,mid);
+
+
+    QString one = s.left(closest);
+    int last = s.length() - closest;
     QString two = s.right(last);
     qDebug() << "****SPLIT STRING:::" + one + "***********"+ two;
     splitStrings->insert(0,one);
