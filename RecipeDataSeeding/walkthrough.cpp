@@ -46,6 +46,8 @@ walkthrough::~walkthrough()
     delete ui;
 }
 
+
+//for measuring part of the walkthrough, we can put each ingredient into an array of the specific recipe and scan the ingredient step to see if it has that certain ingredient
 QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 {
     QString totalStepsString;
@@ -81,6 +83,7 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
             else if(l.key().toUtf8() == "step"){
                 QString txt = l.value().toString();
 
+                //lets us know if the instruction needs to be split into two
                 QList<QString> *t = splitInstruction(txt,s);
 
                 if(!t){
@@ -95,9 +98,6 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
                     listSteps->append(t->at(1));
                     ctr++;
                 }
-
-                //inserts each step into a string list
-
             }
         }
     }
@@ -134,15 +134,23 @@ void walkthrough::setupPages(int number, QList<QString> *&s)
 
         QLabel *lblPage = new QLabel(pageWidget);
         QLabel *lblStep = new QLabel(pageWidget);
+        QLabel *lblMeasure = new QLabel(pageWidget);
         lblPage->setObjectName("label" + QString::number(i+1));
-        lblPage->setText("Page " + QString::number(i+1));
+        lblPage->setText("Step " + QString::number(i+1));
 
         lblStep->setObjectName("step " + QString::number(i+1));
+        lblMeasure->setObjectName("measureLabel" + QString::number(i+1));
+        lblMeasure->setText("Measure: ");
+
         //get specific step index and insert into page label
         lblStep->setText(s->at(i));
         lblStep->setGeometry(50,150,570,280);
         lblStep->setAlignment(Qt::AlignTop);
         lblStep->setWordWrap(true);
+
+        lblMeasure->setGeometry(50,75,570,50);
+        lblMeasure->setAlignment(Qt::AlignTop);
+        lblMeasure->setWordWrap(true);
 
         //add specific page to stack
         ui->stackedWidget->insertWidget(0,pageWidget);
@@ -260,8 +268,14 @@ QList<QString>* walkthrough::split(QString &s){
     int mid = s.length() /2;
 
     //find the closest period to the middle of the string
-    int indForward = s.indexOf(per,mid) + 1 - mid;  //quiche has a bug here
-    int indBackward = mid - s.lastIndexOf(per,mid);
+    int f = s.indexOf(per,mid);
+    int b = s.lastIndexOf(per,mid);
+    if(f == -1 && b == -1){
+        qDebug() << "No period found";
+        return 0;
+    }
+    int indForward = f + 1 - mid;
+    int indBackward = mid - b;
     qDebug() << "INDEXES::::";
     qDebug() << indForward;
     qDebug() << indBackward;
@@ -269,7 +283,7 @@ QList<QString>* walkthrough::split(QString &s){
     if(indForward <= indBackward)
         closest = s.indexOf(per,mid) + 1;
     else
-        closest = s.lastIndexOf(per,mid);
+        closest = s.lastIndexOf(per,mid) + 1;
 
 
     QString one = s.left(closest);

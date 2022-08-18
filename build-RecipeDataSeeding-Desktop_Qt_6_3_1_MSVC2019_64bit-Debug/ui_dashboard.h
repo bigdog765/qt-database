@@ -30,6 +30,7 @@ public:
     QLabel *totalNutrition;
     QLabel *ingredients;
     QLabel *prepTime;
+    QLabel *extendedNutrition;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -42,7 +43,7 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         start = new QPushButton(centralwidget);
         start->setObjectName(QString::fromUtf8("start"));
-        start->setGeometry(QRect(50, 320, 131, 51));
+        start->setGeometry(QRect(50, 390, 131, 51));
         recipeName = new QLabel(centralwidget);
         recipeName->setObjectName(QString::fromUtf8("recipeName"));
         recipeName->setGeometry(QRect(50, 50, 691, 61));
@@ -58,12 +59,16 @@ public:
         totalNutrition->setGeometry(QRect(50, 160, 681, 51));
         ingredients = new QLabel(centralwidget);
         ingredients->setObjectName(QString::fromUtf8("ingredients"));
-        ingredients->setGeometry(QRect(50, 220, 631, 61));
+        ingredients->setGeometry(QRect(50, 320, 631, 61));
         ingredients->setScaledContents(true);
         ingredients->setWordWrap(true);
         prepTime = new QLabel(centralwidget);
         prepTime->setObjectName(QString::fromUtf8("prepTime"));
         prepTime->setGeometry(QRect(50, 130, 161, 16));
+        extendedNutrition = new QLabel(centralwidget);
+        extendedNutrition->setObjectName(QString::fromUtf8("extendedNutrition"));
+        extendedNutrition->setGeometry(QRect(50, 200, 681, 81));
+        extendedNutrition->setWordWrap(true);
         dashboard->setCentralWidget(centralwidget);
         menubar = new QMenuBar(dashboard);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -87,6 +92,7 @@ public:
         totalNutrition->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
         ingredients->setText(QCoreApplication::translate("dashboard", "<html><head/><body><p>TextLabel</p></body></html>", nullptr));
         prepTime->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
+        extendedNutrition->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
     } // retranslateUi
 
 };

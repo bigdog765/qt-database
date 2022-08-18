@@ -20,8 +20,11 @@ public:
     QString getTotalNutrients(QJsonObject &Obj);
     QString getIngredients(QJsonArray &arr);
     int getRecipeID();
+    QString getMicroNutrients();
+    void setMicroNutrients(QString &s);
     void setSteps(QJsonArray &stepArr);
     ~dashboard();
+
 
 private slots:
     void on_start_clicked();
@@ -29,7 +32,9 @@ private slots:
 private:
     Ui::dashboard *ui;
     int recipeID;
-    QJsonArray *steps;
+    QJsonArray *steps; //stores all instruction strings
+    QString micro; //stores all micronutrients
+    QList<QString> *ingr; //stores all ingredients(this is used for the walkthrough page)
 
 };
 

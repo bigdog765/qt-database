@@ -66,6 +66,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     ui->servingSize->setText("Servings: " + QString::number(serving));
     ui->prepTime->setText("Time to Complete: " + QString::number(prep) + " min");
     ui->totalNutrition->setText(nutrition);
+    ui->extendedNutrition->setText(micro);
     ui->ingredients->setText(ingredients);
 }
 
@@ -80,10 +81,11 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
             break;
         }
     }
-    bool skip = true;
+    bool microB = true;
     double amount;
     QString unit;
     QString result = "Total Nutrients: ";
+    micro = "Extended Nutrients: ";
 
     //json file parses keys in althebetical order
     for(auto j = nutrients.begin(); j != nutrients.end();j++){
@@ -93,20 +95,27 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
         for(auto k = f.begin(); k != f.end();k++){
             //check for certain nutritional value
             if(k.value() == "Calories"){
-               skip = false;
+               microB = false;
                result.append("Calories: ");
             }
             else if(k.value() == "Fat"){
-               skip = false;
+               microB = false;
                result.append("Fat: ");
             }
             else if(k.value() == "Carbohydrates"){
-               skip = false;
+               microB = false;
                result.append("Carbohydrates: ");
             }
             else if(k.value() == "Protein"){
-               skip = false;
+               microB = false;
                result.append("Protein: ");
+            }
+            //micros
+            else{
+                if(k.key() == "name"){
+                    microB = true;
+                    micro.append(k.value().toString() + ": ");
+                }
             }
 
 
@@ -119,13 +128,16 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
             }
 
         }
-        if(!skip){
+        if(!microB){
 
             result.append(QString::number(amount) + unit + " ");
-            skip = true;
+        }
+        else{
+            micro.append(QString::number(amount) + unit + " ");
         }
     }
     qDebug() << result;
+    qDebug() << micro;
     return result;
 
 }
@@ -135,13 +147,16 @@ QString dashboard::getIngredients(QJsonArray &arr)
     QString result = "Ingredients: ";
     QString name,unit;
     double amount;
+
+    ingr = new QList<QString>;
     for(auto i = arr.begin(); i != arr.end();i++){
 
         QJsonObject f;
         f =i->toObject();
         for(auto j = f.begin(); j != f.end();j++){
             if(j.key() == "name"){
-                name = j.value().toString();
+                name = j.value().toString(); //SAVE THIS IN AN ARRAY
+                ingr->push_back(name);
 
             }
             else if(j.key() == "amount"){

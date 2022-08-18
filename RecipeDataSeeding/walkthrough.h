@@ -24,6 +24,8 @@ public:
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
 
+    //we need a function to measure each ingredient in the instructions
+
 public slots:
     void onPageClick();
 
