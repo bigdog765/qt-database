@@ -14,7 +14,7 @@ class walkthrough : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit walkthrough(QJsonArray &steps,int recipeID,QWidget *parent = nullptr);
+    explicit walkthrough(QJsonArray &steps,int recipeID,QList<QString> *&measure,QWidget *parent = nullptr);
     ~walkthrough();
     QList<QString>* setupSteps(QJsonArray &steps);
     void setupButtons(int number);
@@ -23,6 +23,7 @@ public:
     int getSteps();
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
+    QString setPortions(QString &instruction);
 
     //we need a function to measure each ingredient in the instructions
 
@@ -34,6 +35,7 @@ private:
     int recipeID;
     QVBoxLayout *layout;
     int numOfSteps;
+    QList<QString> *measureArray; //this array is used to compare the ingredients to the ingredient in the intruction string, so we can place it in the portioning string
 };
 
 #endif // WALKTHROUGH_H

@@ -5,13 +5,14 @@
 #include "QPushButton"
 #include "QLabel"
 
-walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
+walkthrough::walkthrough(QJsonArray &steps,int id,QList<QString> *&measure,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::walkthrough)
 {
     ui->setupUi(this);
     layout = ui->verticalLayout;
     recipeID = id;
+    measureArray = measure;
 
     QList<QString> *listOfSteps = new QList<QString>;
     listOfSteps = setupSteps(steps);
@@ -140,10 +141,15 @@ void walkthrough::setupPages(int number, QList<QString> *&s)
 
         lblStep->setObjectName("step " + QString::number(i+1));
         lblMeasure->setObjectName("measureLabel" + QString::number(i+1));
-        lblMeasure->setText("Measure: ");
+
+        QString instString = s->at(i);
+        QString measureS = setPortions(instString);
+        lblMeasure->setText("Measure: " + measureS);
+
+
 
         //get specific step index and insert into page label
-        lblStep->setText(s->at(i));
+        lblStep->setText(instString);
         lblStep->setGeometry(50,150,570,280);
         lblStep->setAlignment(Qt::AlignTop);
         lblStep->setWordWrap(true);
@@ -293,6 +299,21 @@ QList<QString>* walkthrough::split(QString &s){
     splitStrings->insert(0,one);
     splitStrings->insert(1, two);
     return splitStrings;
+}
+
+QString walkthrough::setPortions(QString &instruction)
+{
+    QString result = "Portion ";
+    //compare instruction string to measure array
+    //this will automatically store ingredients in the measure string that are part of the instruction string & part of the ingredient array
+    //this isnt perfect,we can manually add measuring intructions
+    for(int i = 0; i<measureArray->length();i++){
+        if(instruction.contains(measureArray->at(i),Qt::CaseInsensitive)){
+            result.append(measureArray->at(i) + ", ");
+        }
+    }
+    return result;
+
 }
 
 
