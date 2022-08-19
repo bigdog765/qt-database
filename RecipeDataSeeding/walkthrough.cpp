@@ -128,7 +128,7 @@ void walkthrough::setupButtons(int number)
 
 void walkthrough::setupPages(int number, QList<QString> *&s)
 {
-
+    QFont f( "Segoe", 16);
     for(int i =0;i < number; i++){
         QWidget *pageWidget = new QWidget(ui->stackedWidget);
         pageWidget->setObjectName("page " + QString::number(i+1));
@@ -153,6 +153,8 @@ void walkthrough::setupPages(int number, QList<QString> *&s)
         lblStep->setGeometry(50,150,570,280);
         lblStep->setAlignment(Qt::AlignTop);
         lblStep->setWordWrap(true);
+
+        lblStep->setFont(f);
 
         lblMeasure->setGeometry(50,75,570,50);
         lblMeasure->setAlignment(Qt::AlignTop);
@@ -186,6 +188,13 @@ void walkthrough::onPageClick()
     int a = number.digitValue();
     ui->stackedWidget->setCurrentIndex(a-1);
 
+    if(a == 1){ //last page
+        qDebug() << "last page";
+        QPushButton *clear = new QPushButton();
+        clear->setText("clear page");
+        ui->stackedWidget->insertWidget(0,clear); //fix this, this button should be created at the same time as the labels
+
+    }
 
 }
 
