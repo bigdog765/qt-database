@@ -18,12 +18,14 @@ public:
     ~walkthrough();
     QList<QString>* setupSteps(QJsonArray &steps);
     void setupButtons(int number);
-    void setupPages(int number, QList<QString> *&s);
+    void setupPages(int number,  QVector<int> vec);
     void setSteps(int s);
     int getSteps();
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
     QString setPortions(QString &instruction);
+
+    QVector<int> getNumberOfSubSteps();
 
     //we need a function to measure each ingredient in the instructions
 

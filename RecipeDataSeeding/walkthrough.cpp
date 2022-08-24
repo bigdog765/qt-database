@@ -14,11 +14,18 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QList<QString> *&measure,QWidg
     recipeID = id;
     measureArray = measure;
 
-    QList<QString> *listOfSteps = new QList<QString>;
-    listOfSteps = setupSteps(steps);
+    //********this was the prevous way of AUTOMATES the steps
+    //QList<QString> *listOfSteps = new QList<QString>;
+    //listOfSteps = setupSteps(steps);
+
+    //********this part MANUALLY adds each step written out in a string
+    QVector<int> vec = getNumberOfSubSteps();
 
 
-    setupPages(numOfSteps, listOfSteps);
+    setupPages(numOfSteps, vec); //parameters: number of steps, array of number of substeps for each parent step
+
+
+    //below was unchanged
     setupButtons(numOfSteps);
 
     //make a dummy parent for the layout
@@ -48,6 +55,7 @@ walkthrough::~walkthrough()
 }
 
 
+//AUTOMATES STEPS
 //for measuring part of the walkthrough, we can put each ingredient into an array of the specific recipe and scan the ingredient step to see if it has that certain ingredient
 QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 {
@@ -112,8 +120,10 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 
 }
 
-void walkthrough::setupButtons(int number)
+//MANUAL STEPS
+void walkthrough::setupPages(int number,  QVector<int> vec)
 {
+<<<<<<< Updated upstream
 
     for(int i = 1; i <= number;i++){
          QString buttonText = "Step " + QString::number(number - i + 1);
@@ -129,17 +139,21 @@ void walkthrough::setupButtons(int number)
 void walkthrough::setupPages(int number, QList<QString> *&s)
 {
     QFont f( "Segoe", 16);
+=======
+    int p = 0;
+>>>>>>> Stashed changes
     for(int i =0;i < number; i++){
         QWidget *pageWidget = new QWidget(ui->stackedWidget);
         pageWidget->setObjectName("page " + QString::number(i+1));
 
         QLabel *lblPage = new QLabel(pageWidget);
-        QLabel *lblStep = new QLabel(pageWidget);
+        QLabel *lblSubStep = new QLabel(pageWidget);
         QLabel *lblMeasure = new QLabel(pageWidget);
         lblPage->setObjectName("label" + QString::number(i+1));
         lblPage->setText("Step " + QString::number(i+1));
 
-        lblStep->setObjectName("step " + QString::number(i+1));
+        lblSubStep->setObjectName("substep " + QString::number(i+1));
+
         lblMeasure->setObjectName("measureLabel" + QString::number(i+1));
 
         QString instString = s->at(i);
@@ -148,11 +162,31 @@ void walkthrough::setupPages(int number, QList<QString> *&s)
 
 
 
+<<<<<<< Updated upstream
         //get specific step index and insert into page label
         lblStep->setText(instString);
         lblStep->setGeometry(50,150,570,280);
         lblStep->setAlignment(Qt::AlignTop);
         lblStep->setWordWrap(true);
+=======
+        //maunally insert all substeps
+
+
+        QLabel *labelSubStep = new QLabel(pageWidget);
+        if(recipeID == 660108){ //kale
+            if(i == 0){
+                labelSubStep->setText("Substep 1. Take and wash 1 bunch of Kale, pat dry and remove the leaves from the stems.Substep 2. Now, chop the leaves and place in a large bowl (place in VersaBowl if provided).  Substep 3. Take a small container or bowl and add ⅛ cup olive oil.Substep 4. In the same container, squeeze the juice from one lemon and mix with oil until very well combined.  Substep4. Pour the lemon & olive oil mixture over the kale leaves and toss.");
+            }
+            labelSubStep->setGeometry(50,150,570,180);
+            labelSubStep->setAlignment(Qt::AlignTop);
+            labelSubStep->setWordWrap(true);
+        }
+
+        //lblSubStep->setText(s->at(i));
+        lblSubStep->setGeometry(50,150,570,180);
+        lblSubStep->setAlignment(Qt::AlignTop);
+        lblSubStep->setWordWrap(true);
+>>>>>>> Stashed changes
 
         lblStep->setFont(f);
 
@@ -167,6 +201,22 @@ void walkthrough::setupPages(int number, QList<QString> *&s)
 
     }
 }
+
+void walkthrough::setupButtons(int number)
+{
+
+    for(int i = 1; i <= number;i++){
+         QString buttonText = "Step " + QString::number(number - i + 1);
+         QPushButton* button = new QPushButton(buttonText, ui->verticalLayoutWidget);
+         button->setObjectName("step" + QString::number(i));
+         //insert buttons into the layout depending on how many steps
+         layout->insertWidget(0, button);
+         qDebug() << "Button added";
+
+    }
+}
+
+
 
 void walkthrough::setSteps(int s)
 {
@@ -322,6 +372,59 @@ QString walkthrough::setPortions(QString &instruction)
         }
     }
     return result;
+
+}
+
+
+QVector<int> walkthrough::getNumberOfSubSteps()
+{
+    if(recipeID == 660108){
+        QVector<int> arr = {5,4,1};
+        numOfSteps = 3;
+        return arr;
+    }
+    else if(recipeID == 646567){
+        QVector<int> arr = {4,5,4,1};
+        numOfSteps = 4;
+        return arr;
+    }
+    else if(recipeID == 643642){
+        QVector<int> arr = {1,10,4};
+        numOfSteps = 3;
+        return arr;
+    }
+    else if(recipeID == 646443){
+        QVector<int> arr = {1,6,7,4,6};
+        numOfSteps = 5;
+        return arr;
+    }
+    else if(recipeID == 1096214){
+        QVector<int> arr = {3,4,5,8};
+        numOfSteps = 4;
+        return arr;
+    }
+    else if(recipeID == 638235){
+        QVector<int> arr = {3,4,5,5,1};
+        numOfSteps = 5;
+        return arr;
+    }
+    else if(recipeID == 646974){
+        QVector<int> arr = {1,3,7,6};
+        numOfSteps = 4;
+        return arr;
+    }
+    else if(recipeID == 715522){
+        QVector<int> arr = {4,4,2};
+        numOfSteps = 3;
+        return arr;
+    }
+    else{
+        qDebug() << "id not defined";
+        QVector<int> arr;
+        return arr;
+    }
+
+
 
 }
 

@@ -76,9 +76,9 @@ int MainWindow::getRecipeId(QString name){
     else if(name.endsWith('5')){
         id = 1096214;
     }
-    //button6 = Spinach Quiche = 661249
+    //button6 = Chicken Parm = 638235
     else if(name.endsWith('6')){
-        id = 661249;
+        id = 638235;
     }
     //button7 = Ramen = 646974
     else if(name.endsWith('7')){
