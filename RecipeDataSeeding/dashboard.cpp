@@ -24,6 +24,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     int serving;
     QString nutrition;
     QString ingredients;
+    QString equipment;
 
     //nutrition{nutrients[{Calories,fat,etc.}{Calories,fat,etc.}]} Mainobj->obj->array->obj
     for(auto i = Obj.begin(); i != Obj.end();i++){ 
@@ -36,7 +37,10 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
             ingredients = getIngredients(ingrArr);
         }
         else if(i.key().toUtf8() == "analyzedInstructions"){
+
             QJsonArray steps = i->toArray();
+            equipment = getEquipment(steps);
+            //passes instruction array to walkthrough
             setSteps(steps);
         }
         else {
@@ -68,6 +72,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     ui->totalNutrition->setText(nutrition);
     ui->extendedNutrition->setText(micro);
     ui->ingredients->setText(ingredients);
+    ui->equipment->setText(equipment);
 }
 
 QString dashboard::getTotalNutrients(QJsonObject &Obj)
@@ -169,6 +174,12 @@ QString dashboard::getIngredients(QJsonArray &arr)
         result.append(QString::number(amount) + " " + unit + " " + name + ", ");
     }
 
+    return result;
+}
+
+QString dashboard::getEquipment(QJsonArray &arr)
+{
+    QString result = "Equipment: ";
     return result;
 }
 

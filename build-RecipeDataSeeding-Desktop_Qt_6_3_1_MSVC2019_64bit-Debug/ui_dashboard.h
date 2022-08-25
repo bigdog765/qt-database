@@ -31,6 +31,7 @@ public:
     QLabel *ingredients;
     QLabel *prepTime;
     QLabel *extendedNutrition;
+    QLabel *equipment;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -43,7 +44,7 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         start = new QPushButton(centralwidget);
         start->setObjectName(QString::fromUtf8("start"));
-        start->setGeometry(QRect(50, 390, 131, 51));
+        start->setGeometry(QRect(50, 440, 131, 51));
         recipeName = new QLabel(centralwidget);
         recipeName->setObjectName(QString::fromUtf8("recipeName"));
         recipeName->setGeometry(QRect(50, 50, 691, 61));
@@ -69,6 +70,11 @@ public:
         extendedNutrition->setObjectName(QString::fromUtf8("extendedNutrition"));
         extendedNutrition->setGeometry(QRect(50, 200, 681, 81));
         extendedNutrition->setWordWrap(true);
+        equipment = new QLabel(centralwidget);
+        equipment->setObjectName(QString::fromUtf8("equipment"));
+        equipment->setGeometry(QRect(50, 370, 631, 61));
+        equipment->setScaledContents(true);
+        equipment->setWordWrap(true);
         dashboard->setCentralWidget(centralwidget);
         menubar = new QMenuBar(dashboard);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -93,6 +99,7 @@ public:
         ingredients->setText(QCoreApplication::translate("dashboard", "<html><head/><body><p>TextLabel</p></body></html>", nullptr));
         prepTime->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
         extendedNutrition->setText(QCoreApplication::translate("dashboard", "TextLabel", nullptr));
+        equipment->setText(QCoreApplication::translate("dashboard", "<html><head/><body><p>TextLabel</p></body></html>", nullptr));
     } // retranslateUi
 
 };

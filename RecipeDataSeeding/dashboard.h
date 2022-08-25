@@ -19,6 +19,7 @@ public:
     void displayRecipeInfo(QJsonObject &Obj);
     QString getTotalNutrients(QJsonObject &Obj);
     QString getIngredients(QJsonArray &arr);
+    QString getEquipment(QJsonArray &arr);
     int getRecipeID();
     QString getMicroNutrients();
     void setMicroNutrients(QString &s);
