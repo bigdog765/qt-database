@@ -14,7 +14,7 @@ class walkthrough : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit walkthrough(QJsonArray &steps,int recipeID,QList<QString> *&measure,QWidget *parent = nullptr);
+    explicit walkthrough(QJsonArray &steps,int recipeID,QWidget *parent = nullptr);
     ~walkthrough();
     QList<QString>* setupSteps(QJsonArray &steps);
     void setupButtons(int number);
@@ -23,7 +23,7 @@ public:
     int getSteps();
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
-    QString setPortions(QString &instruction);
+
 
     QVector<int> getNumberOfSubSteps();
 

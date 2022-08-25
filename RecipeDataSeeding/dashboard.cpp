@@ -191,7 +191,7 @@ void dashboard::on_start_clicked()
 {
 
     //link new window
-    walkthrough *walk = new walkthrough(*steps,recipeID,ingr);
+    walkthrough *walk = new walkthrough(*steps,recipeID);
     walk->show();
 }
 
