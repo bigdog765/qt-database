@@ -75,7 +75,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     ui->equipment->setText(equipment);
 }
 
-QString dashboard::getTotalNutrients(QJsonObject &Obj)
+QString dashboard::getTotalNutrients(QJsonObject &Obj)//arr->
 {
     QJsonArray nutrients;
     for(auto i = Obj.begin(); i != Obj.end();i++){
@@ -147,7 +147,7 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)
 
 }
 
-QString dashboard::getIngredients(QJsonArray &arr)
+QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
 {
     QString result = "Ingredients: ";
     QString name,unit;
@@ -179,7 +179,43 @@ QString dashboard::getIngredients(QJsonArray &arr)
 
 QString dashboard::getEquipment(QJsonArray &arr)
 {
-    QString result = "Equipment: ";
+    QString result = "Equipment Needed: ";
+
+    for(auto i = arr.begin(); i!= arr.end(); i++){
+        QJsonObject a;
+        a=i->toObject();
+        for(auto j = a.begin(); j != a.end(); j++){
+            if(j.key() == "steps"){
+                QJsonArray b = j->toArray();
+                for(auto k = b.begin(); k!= b.end(); k++){
+                    QJsonObject c;
+                    c=k->toObject();
+                    for(auto l = c.begin(); l != c.end(); l++){
+                        if(l.key() == "equipment"){
+                            QJsonArray d = l->toArray();
+                            for(auto m = d.begin(); m != d.end(); m++){
+                                QJsonObject e;
+                                e=m->toObject();
+                                for(auto n = e.begin(); n != e.end(); n++){
+                                    if(n.key() == "name"){
+                                        QString newEquip = n.value().toString();
+                                        if(result.contains(newEquip)){
+                                            qDebug() << "already listed";
+                                        }
+                                        else{
+                                            result.append(newEquip + ", ");
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
     return result;
 }
 

@@ -124,6 +124,7 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 //MANUAL STEPS
 
 
+//parameter vec is not used
 void walkthrough::setupPages(int number, QVector<int> vec)
 {
 
@@ -549,7 +550,6 @@ QList<QString>* walkthrough::split(QString &s){
     splitStrings->insert(1, two);
     return splitStrings;
 }
-
 
 
 QVector<int> walkthrough::getNumberOfSubSteps()
