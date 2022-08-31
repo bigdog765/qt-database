@@ -4,6 +4,7 @@
 #include "QJsonObject"
 #include "QPushButton"
 #include "QLabel"
+#include "QGroupBox"
 
 walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
     QMainWindow(parent),
@@ -40,13 +41,26 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
     QList<QPushButton*> listB = layout->parentWidget()->findChildren<QPushButton*>();
     qDebug() << listB.size();
 
+    QList<QPushButton*> subList = getSubButtons();
+    qDebug() << "**************";
 
 
+    //sub step button
+    for(int j=0;j< numOfSteps;j++){
+        qDebug() << "button found:";
+           qDebug() << subList.at(j)->objectName();
+        connect(subList.at(j),SIGNAL(clicked()),this,SLOT(onSubClick()));
+
+    }
+
+
+    //main step buttons
     for(int i=0;i< numOfSteps;i++){
-        qDebug() << (*listB.at(i)).objectName();
+
         connect(listB.at(i),SIGNAL(clicked()),this,SLOT(onPageClick()));
 
     }
+
 
 }
 
@@ -146,6 +160,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         scale->setGeometry(50,100,75,25);
 
 
+        QStringList list1;
 
         //maunally insert all substeps
         QLabel *labelSubStep = new QLabel(pageWidget);
@@ -156,6 +171,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 3. Take a small container or bowl and add ⅛ cup olive oil.\n"
                                       "Substep 4. In the same container, squeeze the juice from one lemon and mix with oil until very well combined.\n"
                                       "Substep 5. Pour the lemon & olive oil mixture over the kale leaves and toss.");
+
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1. Take 1 bell pepper and chop to desired size. Add to the bowl.\n"
@@ -199,6 +215,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         else if(recipeID == 643642){ //mac
             if(i == 0){
                 labelSubStep->setText("Substep 1. Prepare macaroni as instructed throughout the remainder of these instructions. Move to the next step once started. (SHOW ICON OF POT COOKING).");
+                QString s = labelSubStep->text();
+                list1 = s.split("\n");
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1.  Heat a large frying pan, or pot, over medium heat. Add a drizzle of olive oil. (SHOW ICON OF HOT PAN)\n"
@@ -211,6 +229,9 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 8. In the same pot, add 226 grams of black olives.\n"
                                       "Substep 9. In the same pot, add 1 can of drained tuna.\n"
                                       "Substep 10. Sautee mixture for 3 minutes. Dont forget to check on the macoroni! When done, proceed.");
+                QString s = labelSubStep->text();
+                list1 = s.split("\n");
+
 
             }
             if(i == 2){
@@ -218,6 +239,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 2. Your macaroni should now be done cooking! Strain macaroni in a colander and place cooked noodles back into the same large pot.\n"
                                       "Substep 3. Pour all of the sauteed mixture over the cooked noodles and stir. If the substance is too liquid, keep over covered medium-low heat until liquid has evaporated.\n"
                                       "Substep 4. Once ready, top with your favorite cheese and enjoy!");
+                QString s = labelSubStep->text();
+                list1 = s.split("\n");
             }
 
         }
@@ -379,11 +402,38 @@ void walkthrough::setupPages(int number, QVector<int> vec)
             qDebug() << "id not regonized";
         }
 
-        labelSubStep->setGeometry(50,150,570,180);
-        labelSubStep->setAlignment(Qt::AlignTop);
-        labelSubStep->setWordWrap(true);
+        //differentiate substacks
 
-        //add specific page to stack
+        QStackedWidget *subStack = new QStackedWidget(pageWidget);
+        subStack->setObjectName("subStack"+ QString::number(i+1));
+        subStack->setGeometry(50,150,570,180);
+        subStack->setStyleSheet("background-color: rgb(200, 200, 200)");
+
+
+        labelSubStep->setParent(subStack);
+
+
+        //convert each substep string into a label and add to substep stacked widget
+        for(int j = 0; j < list1.size(); j++){
+            QLabel *a = new QLabel(subStack);
+            a->setText(list1.at(j));
+            a->setAlignment(Qt::AlignTop);
+            a->setWordWrap(true);
+            a->setFixedWidth(570);
+            a->setFixedHeight(180);
+
+            subStack->insertWidget(0,a);
+            qDebug() << "substack inserted";
+        }
+        qDebug() << "stack size:";
+        qDebug() << subStack->count();
+        QPushButton *subButton = new QPushButton(subStack);
+        subButton->setObjectName("subB" + QString::number(i+1));
+        subButton->setText("Next");
+        subButton->setGeometry(480,140,75,25);
+        setSubButtons(subButton);
+
+        //add main page to stack
         ui->stackedWidget->insertWidget(0,pageWidget);
 
         qDebug() << "Page inserted";
@@ -436,6 +486,25 @@ void walkthrough::onPageClick()
 
     }
     */
+
+}
+
+void walkthrough::onSubClick()
+{
+    qDebug() << "SUB CALLED!!!!!!!";
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    qDebug() << button->objectName();
+    QChar number = button->objectName().back();
+    int a = number.digitValue();
+    QStackedWidget *w = ui->stackedWidget->findChild<QStackedWidget*>("subStack"+ QString::number(a));
+    qDebug() << w->objectName();
+
+    int ind = w->currentIndex();
+
+    //fix thisss
+    qDebug() << ind;
+    int p = ind - 1;
+    w->setCurrentIndex(p);
 
 }
 
@@ -549,6 +618,16 @@ QList<QString>* walkthrough::split(QString &s){
     splitStrings->insert(0,one);
     splitStrings->insert(1, two);
     return splitStrings;
+}
+
+void walkthrough::setSubButtons(QPushButton *&b)
+{
+    subButtons.push_back(b);
+}
+
+QList<QPushButton*> walkthrough::getSubButtons()
+{
+    return subButtons;
 }
 
 

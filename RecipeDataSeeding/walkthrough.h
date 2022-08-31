@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QBoxLayout>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 namespace Ui {
 class walkthrough;
@@ -23,6 +24,8 @@ public:
     int getSteps();
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
+    void setSubButtons(QPushButton *&b);
+    QList<QPushButton*> getSubButtons();
 
 
     QVector<int> getNumberOfSubSteps();
@@ -31,6 +34,7 @@ public:
 
 public slots:
     void onPageClick();
+    void onSubClick();
 
 private:
     Ui::walkthrough *ui;
@@ -38,6 +42,7 @@ private:
     QVBoxLayout *layout;
     int numOfSteps;
     QList<QString> *measureArray; //this array is used to compare the ingredients to the ingredient in the intruction string, so we can place it in the portioning string
+    QList<QPushButton*> subButtons;
 };
 
 #endif // WALKTHROUGH_H
