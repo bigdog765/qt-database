@@ -126,7 +126,7 @@ QString MainWindow::getRecipeContent(int id){
     QByteArray GET_RECIPE = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe";
     QUrl versa_recipe(GET_RECIPE);
     QNetworkRequest request_r(versa_recipe);
-    request_r.setRawHeader("Content-Type", "application/json");
+    //request_r.setRawHeader("Content-Type", "application/json");
 
 
     QNetworkAccessManager *managerWeb = new QNetworkAccessManager();

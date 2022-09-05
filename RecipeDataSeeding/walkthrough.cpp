@@ -161,6 +161,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
 
         QStringList list1;
+        QString s;
 
         //maunally insert all substeps
         QLabel *labelSubStep = new QLabel(pageWidget);
@@ -171,17 +172,20 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 3. Take a small container or bowl and add ⅛ cup olive oil.\n"
                                       "Substep 4. In the same container, squeeze the juice from one lemon and mix with oil until very well combined.\n"
                                       "Substep 5. Pour the lemon & olive oil mixture over the kale leaves and toss.");
+                s = labelSubStep->text();
 
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1. Take 1 bell pepper and chop to desired size. Add to the bowl.\n"
                                       "Substep 2. Take 1 avocado, remove the pit, and slice pieces to desired size. Add to the bowl.\n"
                                       "Substep 3. Take 1 red onion, remove skin, and slice pieces thinly to desired size. Add to the bowl.\n"
-                                      "Substep 4. Take the bowl and toss the contents until the mixture is even.\n");
+                                      "Substep 4. Take the bowl and toss the contents until the mixture is even.");
+                s = labelSubStep->text();
 
             }
             if(i == 2){
                 labelSubStep->setText("Substep 1. Sprinkle desired amount of salt and pepper onto salad. Enjoy!");
+                s = labelSubStep->text();
             }
         }
         else if(recipeID == 646567){ //chili
@@ -189,25 +193,29 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                 labelSubStep->setText("Substep 1. Take a medium saucepan and place on medium heat over the stove. (SHOW ICON OF PAN)\n"
                                       "Substep 2. Once hot, place ground beef in a sauce pan and brown 1135 grams of ground beef, breaking it into small pieces as it cooks.\n"
                                       "Substep 3. Add salt and pepper to taste while cooking.\n"
-                                      "Substep 4. Remove the cooked meat from the heat, drain to remove grease.\n");
+                                      "Substep 4. Remove the cooked meat from the heat, drain to remove grease.");
+                s = labelSubStep->text();
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1. Transfer cooked beef into a large pot and place over medium-low heat. (SHOW ICON OF PAN)\n"
                                       "Susbtep 2. Measure 425 grams of pinto beans and add to the pot.\n"
                                       "Substep 3. Measure 425 grams of diced tomatoes and add to the pot.\n"
                                       "Substep 4. Measure 225 grams of tomato sauce and add to the pot.\n"
-                                      "Susbtep 5. Measure 425 grams of red kidney beans and add to the pot.\n");
+                                      "Susbtep 5. Measure 425 grams of red kidney beans and add to the pot.");
+                s = labelSubStep->text();
 
             }
             if(i == 2){
                 labelSubStep->setText("Substep 1. Add 50 grams of chopped celery to the pot.\n"
                                       "Substep 2. Take 1 chopped white onion and add to the pot.\n"
                                       "Substep 3. Take 113 grams of chopped green chilies and add to the pot.\n"
-                                      "Substep 4. Add all desired spices, to taste, to the pot. We recommend 2 tbsp chili powder, 0.5 tbsp ground cumin, 1 tsp salt, 1 tsp black pepper, 0.5 tsp onion powder.\n");
+                                      "Substep 4. Add all desired spices, to taste, to the pot. We recommend 2 tbsp chili powder, 0.5 tbsp ground cumin, 1 tsp salt, 1 tsp black pepper, 0.5 tsp onion powder.");
+                s = labelSubStep->text();
 
             }
             if(i == 3){
                 labelSubStep->setText("Substep 1.  Stir together and cook over medium heat, bringing to a simmer.  Reduce the heat to low and continue simmering for 50-60 minutes, stirring occasionally. (SHOW ICON OF STOVE TOP COUNTDOWN TIMER).");
+                s = labelSubStep->text();
 
             }
 
@@ -215,8 +223,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         else if(recipeID == 643642){ //mac
             if(i == 0){
                 labelSubStep->setText("Substep 1. Prepare macaroni as instructed throughout the remainder of these instructions. Move to the next step once started. (SHOW ICON OF POT COOKING).");
-                QString s = labelSubStep->text();
-                list1 = s.split("\n");
+                s = labelSubStep->text();
+
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1.  Heat a large frying pan, or pot, over medium heat. Add a drizzle of olive oil. (SHOW ICON OF HOT PAN)\n"
@@ -229,8 +237,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 8. In the same pot, add 226 grams of black olives.\n"
                                       "Substep 9. In the same pot, add 1 can of drained tuna.\n"
                                       "Substep 10. Sautee mixture for 3 minutes. Dont forget to check on the macoroni! When done, proceed.");
-                QString s = labelSubStep->text();
-                list1 = s.split("\n");
+                s = labelSubStep->text();
+
 
 
             }
@@ -239,8 +247,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 2. Your macaroni should now be done cooking! Strain macaroni in a colander and place cooked noodles back into the same large pot.\n"
                                       "Substep 3. Pour all of the sauteed mixture over the cooked noodles and stir. If the substance is too liquid, keep over covered medium-low heat until liquid has evaporated.\n"
                                       "Substep 4. Once ready, top with your favorite cheese and enjoy!");
-                QString s = labelSubStep->text();
-                list1 = s.split("\n");
+                s = labelSubStep->text();
+
             }
 
         }
@@ -248,6 +256,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
             qDebug() << "MUFFINS";
             if(i == 0){
                 labelSubStep->setText("Substep 1. Preheat oven to 350F. (SHOW ICON OF OVEN)");
+                s = labelSubStep->text();
 
             }
             if(i == 1){
@@ -257,6 +266,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 4. In the same bowl, add 1 tsp of baking soda.\n"
                                       "Substep 5. In the same bowl, add 0.5 tsp of salt.\n"
                                       "Substep 6. Whisk ingredients together until mixed evenly.");
+                s = labelSubStep->text();
 
             }
             if(i == 2){
@@ -267,12 +277,14 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 5. In the same bowl, add 1 can of diced pineapple with juice.\n"
                                       "Substep 6. In the same bowl, add 1 cup of grated carrots.\n"
                                       "Substep 7. Stir all ingredients together until mixed evenly. Set aside");
+                s = labelSubStep->text();
             }
             if(i == 3){
                 labelSubStep->setText("Substep 1. In a separate bowl, add 2 large eggs.\n"
                                       "Substep 2. In the same bowl, add 1 cup of unsweetened apple sauce.\n"
                                       "Substep 3. In the same bowl. add 1.5 tsp of pure vanilla extract.\n"
-                                      "Substep 4. Whisk all ingredients until mixed evenly. Once mixed, pour into the bowl with all the dry ingredients and blend well!\n");
+                                      "Substep 4. Whisk all ingredients until mixed evenly. Once mixed, pour into the bowl with all the dry ingredients and blend well!");
+                s = labelSubStep->text();
 
             }
             if(i == 4){
@@ -282,6 +294,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 4. Place muffin tray in the oven and bake for 30-35 minutes. You can also check if muffins are thoroughly cooked by sticking a toothpick into each one. (SHOW ICON OF COUNTDOWN TIMER WITH OVEN)\n"
                                       "Substep 5. Remove muffin tray from oven and let cool for 10 minutes. (COOLING ICON SHOW WITH COUNTDOWN TIMER)\n"
                                       "Substep 6. Once cooled, enjoy with friends or family!");
+                s = labelSubStep->text();
 
             }
 
@@ -291,12 +304,14 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                 labelSubStep->setText("Substep 1. Preheat oven to 350F. (SHOW ICON OF OVEN)\n"
                                       "Substep 2. Prepare a baking sheet onto a normal sized oven tray.\n"
                                       "Substep 3. Take out blender and set aside.");
+                s = labelSubStep->text();
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1. Cut 1,135 grams of baby tomatoes and place cut-side up all on the baking tray.\n"
                                       "Substep 2. Season tomatoes with 1 tsp of salt.\n"
                                       "Substep 3. Drizzle 1 tbsp of olive oil over tomatoes.\n"
                                       "Substep 4. Once oven has hit 350F, place rack of tomatoes inside for 25-30 minutes. A good indicator of readiness is by the curling and crisping of the tomato skin. Proceed to next.(SHOW ICON OF COUNTDOWN TIMER)");
+                s = labelSubStep->text();
 
             }
             if(i == 2){
@@ -305,6 +320,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 3. In a large saucepan over medium heat, warm 1 tbsp of olive oil. (SHOW ICON OF STOVETOP)\n"
                                       "Substep 4. Add onions to the saucepan and saute until almost translucent, then add garlic.\n"
                                       "Substep 5. Reduce heat and stir until garlic is aromatic and softened, 3 to 5 minutes. Proceed when done and turn off stove.(TURN OFF STOVETOP ICON)");
+                s = labelSubStep->text();
 
             }
             if(i == 3){
@@ -316,6 +332,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 6. In the same pan, add 0.5 cup of coconut milk.\n"
                                       "Substep 7. Stir until all the ingredients until mixed evenly and warmed throughout. Roughly 2 to 4 minutes. Once done, turn off the heat.\n"
                                       "Substep 8. Ladle tomato soup into bowls and add the desired amount of basil, black pepper, and cheese!");
+                s = labelSubStep->text();
 
             }
 
@@ -325,12 +342,14 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                 labelSubStep->setText("Substep 1.Preheat oven to 350F. (SHOW ICON OF OVEN)\n"
                                       "Substep 2. Place a large skillet onto the stove over medium-high heat.\n"
                                       "Substep 3. Add 2 tbsp of vegetable oil to the skillet. Proceed when done.(SHOW ICON OF PAN)");
+                s = labelSubStep->text();
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1. Take 2 boneless, skinless chicken breasts and cut into thin, half sections.\n"
                                       "Substep 2. Season both sides of chicken filets with a desired amount of salt and pepper.\n"
                                       "Substep 3.Coat each side of each chicken filet with a desired amount of all-purpose flour. Set aside.\n"
                                       "Substep 4. Place a small skillet over medium-low heat and add in 1 jar of red tomato pasta sauce. Proceed when done. (SHOW ICON OF SKILLET)");
+                s = labelSubStep->text();
             }
             if(i == 2){
                 labelSubStep->setText("Substep 1. Take a medium sized bowl and lightly beat 1 egg.\n"
@@ -338,6 +357,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 3. In the same bowl of bread crumbs, pour in 1.5 tbsp of garlic powder.\n"
                                       "Substep 4. Take your floured chicken filets and dip into the egg wash, coating all over, then into the bread crumbs. Bread all four chicken breasts.\n"
                                       "Substep 5. Place each chicken filet into the skillet and cook for three minutes on each side, or until golden brown on each side. When done, proceed.");
+                s = labelSubStep->text();
             }
             if(i == 3){
                 labelSubStep->setText("Substep 1. Get out a large baking sheet and place each chicken filet on the sheet.\n"
@@ -345,20 +365,24 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 3. In a large pot, boil however much water is needed to cook 1 box of any type of pasta. We recommend angel hair pasta, but any type will do! Once pasta is inside the pot, proceed to next. (SHOW ICON OF POT)\n"
                                       "Substep 4. Once the timer for the oven runs out, pull the chicken out and rest on a hot plate. Do not turn off the oven. \n"
                                       "Substep 5. Top cooked chicken with 1 cup of shredded mozzarella cheese, and place back into the oven to melt the cheese for 3-5 minutes. Proceed to set timer.");
+                s = labelSubStep->text();
             }
             if(i == 4){
                 labelSubStep->setText("Substep 1. When the pasta is done, strain in a colander and place cooked noodles on however many plates. topped with chicken and the cover with sauce. If youre feeling zesty add a little fresh shaved Pecorino-Romano or grated Parmesan cheese!");
+                s = labelSubStep->text();
             }
 
         }
         else if(recipeID == 646974){ //ramen
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take out a blender and set aside.");
+                s = labelSubStep->text();
             }
             if(i == 1){
                 labelSubStep->setText("Substep 1. Put 5 cloves of garlic into the blender. DO NOT TURN ON.\n"
                                       "Substep 2. Put 2 small brown onions into the same blender.\n"
                                       "Substep 3. Put 5 carrots into the same blender. Blend for 3-4 seconds until mixture is finely minced. Set aside.");
+                s = labelSubStep->text();
             }
             if(i == 2){
                 labelSubStep->setText("Substep 1. Place a soup pot on the stove over medium heat. (SHOW ICON OF STOVETOP)\n"
@@ -368,6 +392,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 5. In the same bowl, add 1 tsp of sea salt\n"
                                       "Substep 6, In the same bowl, add a dash of celery seed.\n"
                                       "Substep 7. Stir ingredients and pour onto minced vegetable mixture after timer has run out. Stir constantly for 30 seconds, coating the vegetables well.");
+                s = labelSubStep->text();
             }
             if(i == 3){
                 labelSubStep->setText("Substep 1. In the same pot, pour in 4 cups of water.\n"
@@ -376,6 +401,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 4. After 30 minutes, remove lid and pour in 0.5 cup of rice milk\n"
                                       "Substep 5. Add 113 grams of rice noodles. \n"
                                       "Substep 6. Simmer for 10 minutes on low heat, or until noodles are soft. Serve and Enjoy!");
+                s = labelSubStep->text();
             }
         }
         else if(recipeID == 715522){ //chicken apple salad
@@ -384,6 +410,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 2. In the same bowl, add 3 stalks of chopped celery\n"
                                       "Substep 3. In the same bowl, add 1 cup of chopped apples. We recommend granny smith!\n"
                                       "Substep 4. Mix contents together and set aside.");
+                s = labelSubStep->text();
 
             }
             if(i == 1){
@@ -391,16 +418,21 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 2. In the same bowl, add 0.5 cup of plain yogurt.\n"
                                       "Substep 3. In the same bowl, add 2 tsp of lemon juice.\n"
                                       "Substep 4. Mix contents together well until even.");
+                s = labelSubStep->text();
 
             }
             if(i == 2){
                 labelSubStep->setText("Substep 1. Pour bowl of lemon juice mixture over large bowl of chicken mixture. Stir well until mixed well.\n"
                                       "Substep 2.  Add desired amount of salt and pepper to taste. Enjoy! ");
+                s = labelSubStep->text();
             }
         }
         else{
             qDebug() << "id not regonized";
         }
+
+        //string list of all substeps
+        list1 = s.split("\n");
 
         //differentiate substacks
 
@@ -415,6 +447,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         //convert each substep string into a label and add to substep stacked widget
         for(int j = 0; j < list1.size(); j++){
+            //labels
             QLabel *a = new QLabel(subStack);
             a->setText(list1.at(j));
             a->setAlignment(Qt::AlignTop);
@@ -427,10 +460,14 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         }
         qDebug() << "stack size:";
         qDebug() << subStack->count();
-        QPushButton *subButton = new QPushButton(subStack);
+
+
+        //buttons
+        //this buttons parent is the main window not the substack
+        QPushButton *subButton = new QPushButton(pageWidget);
         subButton->setObjectName("subB" + QString::number(i+1));
         subButton->setText("Next");
-        subButton->setGeometry(480,140,75,25);
+        subButton->setGeometry(530,280,75,25);
         setSubButtons(subButton);
 
         //add main page to stack
@@ -501,7 +538,6 @@ void walkthrough::onSubClick()
 
     int ind = w->currentIndex();
 
-    //fix thisss
     qDebug() << ind;
     int p = ind - 1;
     w->setCurrentIndex(p);
