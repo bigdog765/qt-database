@@ -5,6 +5,7 @@
 #include "QPushButton"
 #include "QLabel"
 #include "QGroupBox"
+#include "measure.h"
 
 walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
     QMainWindow(parent),
@@ -556,6 +557,8 @@ void walkthrough::onSubClick()
 void walkthrough::onScaleClick()
 {
     qDebug() << "Scale Clicked";
+    measure *meas = new measure();
+    meas->show();
 }
 
 //this function will manually split certain instruction strings that are too long

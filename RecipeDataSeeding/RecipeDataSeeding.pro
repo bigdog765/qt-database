@@ -13,16 +13,19 @@ SOURCES += \
     dashboard.cpp \
     main.cpp \
     mainwindow.cpp \
+    measure.cpp \
     walkthrough.cpp
 
 HEADERS += \
     dashboard.h \
     mainwindow.h \
+    measure.h \
     walkthrough.h
 
 FORMS += \
     dashboard.ui \
     mainwindow.ui \
+    measure.ui \
     walkthrough.ui
 
 # Default rules for deployment.
