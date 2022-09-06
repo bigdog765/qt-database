@@ -41,7 +41,10 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
     QList<QPushButton*> listB = layout->parentWidget()->findChildren<QPushButton*>();
     qDebug() << listB.size();
 
+
+
     QList<QPushButton*> subList = getSubButtons();
+    QList<QPushButton*> scaleList = getScaleButtons();
     qDebug() << "**************";
 
 
@@ -50,6 +53,11 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
         qDebug() << "button found:";
            qDebug() << subList.at(j)->objectName();
         connect(subList.at(j),SIGNAL(clicked()),this,SLOT(onSubClick()));
+
+    }
+    //sub step button
+    for(int j=0;j< numOfSteps;j++){
+        connect(scaleList.at(j),SIGNAL(clicked()),this,SLOT(onScaleClick()));
 
     }
 
@@ -158,6 +166,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         scale->setText("Measure");
         scale->setObjectName("measureButton");
         scale->setGeometry(50,100,75,25);
+        setScaleButtons(scale);
 
 
         QStringList list1;
@@ -544,6 +553,11 @@ void walkthrough::onSubClick()
 
 }
 
+void walkthrough::onScaleClick()
+{
+    qDebug() << "Scale Clicked";
+}
+
 //this function will manually split certain instruction strings that are too long
 //instructions that need to be split:
 //kale 1,2
@@ -664,6 +678,16 @@ void walkthrough::setSubButtons(QPushButton *&b)
 QList<QPushButton*> walkthrough::getSubButtons()
 {
     return subButtons;
+}
+
+void walkthrough::setScaleButtons(QPushButton *&b)
+{
+    scaleButtons.push_back(b);
+}
+
+QList<QPushButton *> walkthrough::getScaleButtons()
+{
+    return scaleButtons;
 }
 
 
