@@ -7,14 +7,14 @@
 #include "QGroupBox"
 #include "measure.h"
 
-walkthrough::walkthrough(QJsonArray &steps,int id,QWidget *parent) :
+walkthrough::walkthrough(QJsonArray &steps,int id,QVector<int> ingredients,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::walkthrough)
 {
     ui->setupUi(this);
     layout = ui->verticalLayout;
     recipeID = id;
-
+    ingr = ingredients;
 
     //********this was the prevous way of AUTOMATES the steps
     //QList<QString> *listOfSteps = new QList<QString>;
@@ -557,7 +557,7 @@ void walkthrough::onSubClick()
 void walkthrough::onScaleClick()
 {
     qDebug() << "Scale Clicked";
-    measure *meas = new measure();
+    measure *meas = new measure(ingr);
     meas->show();
 }
 
