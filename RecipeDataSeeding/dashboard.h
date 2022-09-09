@@ -24,6 +24,8 @@ public:
     QString getMicroNutrients();
     void setMicroNutrients(QString &s);
     void setSteps(QJsonArray &stepArr);
+    QVector<int> getIngredientID();
+    void setIngredientID(int id);
     ~dashboard();
 
 
@@ -36,6 +38,7 @@ private:
     QJsonArray *steps; //stores all instruction strings
     QString micro; //stores all micronutrients
     QList<QString> *ingr; //stores all ingredients(this is used for the walkthrough page)
+    QVector<int> ingrIDs;
 
 };
 

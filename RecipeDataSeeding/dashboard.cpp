@@ -14,6 +14,7 @@ dashboard::dashboard(QJsonObject &Obj,int id,QWidget *parent) :QMainWindow(paren
     displayRecipeInfo(Obj);
 
 
+
 }
 
 void dashboard::displayRecipeInfo(QJsonObject &Obj)
@@ -151,6 +152,7 @@ QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
 {
     QString result = "Ingredients: ";
     QString name,unit;
+    int id;
     double amount;
 
     ingr = new QList<QString>;
@@ -159,7 +161,11 @@ QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
         QJsonObject f;
         f =i->toObject();
         for(auto j = f.begin(); j != f.end();j++){
-            if(j.key() == "name"){
+            if(j.key() == "id"){
+                id = j.value().toInt();
+                setIngredientID(id);
+            }
+            else if(j.key() == "name"){
                 name = j.value().toString(); //SAVE THIS IN AN ARRAY
                 ingr->push_back(name);
 
@@ -229,6 +235,16 @@ void dashboard::setSteps(QJsonArray &stepArr)
     steps = new QJsonArray(stepArr);
 }
 
+QVector<int> dashboard::getIngredientID()
+{
+    return ingrIDs;
+}
+
+void dashboard::setIngredientID(int id)
+{
+    ingrIDs.append(id);
+}
+
 dashboard::~dashboard()
 {
     delete ui;
@@ -236,9 +252,12 @@ dashboard::~dashboard()
 
 void dashboard::on_start_clicked()
 {
-
+    //test ingredient ids
+    for(int i = 0; i < ingrIDs.size(); i++){
+        qDebug() << ingrIDs.at(i);
+    }
     //link new window
-    walkthrough *walk = new walkthrough(*steps,recipeID);
+    walkthrough *walk = new walkthrough(*steps,recipeID,ingrIDs);
     walk->show();
 }
 

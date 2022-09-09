@@ -12,7 +12,8 @@ class measure : public QDialog
     Q_OBJECT
 
 public:
-    explicit measure(QWidget *parent = nullptr);
+    explicit measure(QVector<int> ingr,QWidget *parent = nullptr);
+    void printIngredients(QVector<int> ingr);
     ~measure();
 
 private:

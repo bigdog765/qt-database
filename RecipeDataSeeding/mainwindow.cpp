@@ -121,20 +121,29 @@ QString MainWindow::getRecipeContent(int id){
 
 
     //new version with web layer
+/*
+    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe";
+
+    QUrl food_url(RECIPE_URL);
+    QNetworkRequest food_request(food_url);
+
+    food_request.setRawHeader("Content-Type", "application/json");
 
 
-    QByteArray GET_RECIPE = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe";
-    QUrl versa_recipe(GET_RECIPE);
-    QNetworkRequest request_r(versa_recipe);
-    //request_r.setRawHeader("Content-Type", "application/json");
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
+    QEventLoop loop;
+
+        QObject::connect(manager,
+                         SIGNAL(finished(QNetworkReply*)),
+                         &loop,
+                         SLOT(quit()));
 
 
-    QNetworkAccessManager *managerWeb = new QNetworkAccessManager();
-    QNetworkReply* reply2 = managerWeb->get(request_r);
-    QString response2 = (QString)reply2->readAll();
-    qDebug() << "Response2: " + response2;
-    //response is empty
-
+        QNetworkReply* reply = manager->get(food_request);
+        loop.exec();
+        QString response = (QString)reply->readAll();
+        qDebug() << "Response: " + response;
+*/
     return response;
 
 }
