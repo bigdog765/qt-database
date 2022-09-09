@@ -7,15 +7,17 @@ measure::measure(QVector<int> ingr,QWidget *parent) :
     ui(new Ui::measure)
 {
     ui->setupUi(this);
+    ingrIds = ingr;
     //in the dashboard function, create a function that returns an array of all ingredient ids
     printIngredients(ingr);
+
 }
 
 void measure::printIngredients(QVector<int> ingr)
 {
     for(int i = 0; i < ingr.length(); i++){
-        qDebug() << ingr.at(i);
-        qDebug() << " ";
+        //qDebug() << ingr.at(i);
+        //qDebug() << " ";
     }
 }
 

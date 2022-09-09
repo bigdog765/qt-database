@@ -18,6 +18,7 @@ public:
 
 private:
     Ui::measure *ui;
+    QVector<int> ingrIds;
 };
 
 #endif // MEASURE_H

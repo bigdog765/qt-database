@@ -44,19 +44,28 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QVector<int> ingredients,QWidg
 
 
 
-    QList<QPushButton*> subList = getSubButtons();
+    QList<QPushButton*> subListNext = getSubButtonsNext();
+    QList<QPushButton*> subListPrev = getSubButtonsPrev();
     QList<QPushButton*> scaleList = getScaleButtons();
     qDebug() << "**************";
 
 
-    //sub step button
+    //sub step button next
     for(int j=0;j< numOfSteps;j++){
         qDebug() << "button found:";
-           qDebug() << subList.at(j)->objectName();
-        connect(subList.at(j),SIGNAL(clicked()),this,SLOT(onSubClick()));
+           qDebug() << subListNext.at(j)->objectName();
+        connect(subListNext.at(j),SIGNAL(clicked()),this,SLOT(onSubClickNext()));
 
     }
-    //sub step button
+    //prev
+    for(int j=0;j< numOfSteps;j++){
+        qDebug() << "button found:";
+           qDebug() << subListPrev.at(j)->objectName();
+        connect(subListPrev.at(j),SIGNAL(clicked()),this,SLOT(onSubClickPrev()));
+
+    }
+
+    //scale button
     for(int j=0;j< numOfSteps;j++){
         connect(scaleList.at(j),SIGNAL(clicked()),this,SLOT(onScaleClick()));
 
@@ -163,19 +172,21 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         lblPage->setText("Step " + QString::number(i+1));
         lblPage->setFont(step_f);
 
-        QPushButton *scale = new QPushButton(pageWidget);
-        scale->setText("Measure");
-        scale->setObjectName("measureButton");
-        scale->setGeometry(50,100,75,25);
-        setScaleButtons(scale);
+
 
 
         QStringList list1;
         QString s;
+        int mainPage = 0;
+        int subPage = 0;
+
+        mainAndSubPageArray[0] = i;
+        mainAndSubPageArray[1] = subPage;
 
         //maunally insert all substeps
         QLabel *labelSubStep = new QLabel(pageWidget);
         if(recipeID == 660108){ //kale
+            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take and wash 1 bunch of Kale, pat dry and remove the leaves from the stems.\n"
                                       "Substep 2. Now, chop the leaves and place in a large bowl (place in VersaBowl if provided).\n"
@@ -199,6 +210,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
             }
         }
         else if(recipeID == 646567){ //chili
+            mainPage = i;
+
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take a medium saucepan and place on medium heat over the stove. (SHOW ICON OF PAN)\n"
                                       "Substep 2. Once hot, place ground beef in a sauce pan and brown 1135 grams of ground beef, breaking it into small pieces as it cooks.\n"
@@ -231,6 +244,8 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 643642){ //mac
+            mainPage = i;
+
             if(i == 0){
                 labelSubStep->setText("Substep 1. Prepare macaroni as instructed throughout the remainder of these instructions. Move to the next step once started. (SHOW ICON OF POT COOKING).");
                 s = labelSubStep->text();
@@ -263,7 +278,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 1096070){ //muffin
-            qDebug() << "MUFFINS";
+            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Preheat oven to 350F. (SHOW ICON OF OVEN)");
                 s = labelSubStep->text();
@@ -310,6 +325,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 1096214){ //basil
+            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Preheat oven to 350F. (SHOW ICON OF OVEN)\n"
                                       "Substep 2. Prepare a baking sheet onto a normal sized oven tray.\n"
@@ -348,6 +364,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 638235){ //parm
+            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1.Preheat oven to 350F. (SHOW ICON OF OVEN)\n"
                                       "Substep 2. Place a large skillet onto the stove over medium-high heat.\n"
@@ -384,6 +401,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 646974){ //ramen
+            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take out a blender and set aside.");
                 s = labelSubStep->text();
@@ -399,7 +417,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                                       "Substep 2. Add minced vegetables mixture from blender to the pot, mixing occasionally, until just soft. Should take about 8 minutes. Proceed to next step once on the stove. (SHOW COUNTDOWN TIMER)\n"
                                       "Substep 3. Take out a medium sized bowl, add 0.5 cup of all-purpose gluten free flour.\n"
                                       "Substep 4. In the same bowl, add 2 tsp of poultry seasoning\n"
-                                      "Substep 5. In the same bowl, add 1 tsp of sea salt\n"
+                                      "Substep 5. In the same bowl, add 1 tsp of sea salt.\n"
                                       "Substep 6, In the same bowl, add a dash of celery seed.\n"
                                       "Substep 7. Stir ingredients and pour onto minced vegetable mixture after timer has run out. Stir constantly for 30 seconds, coating the vegetables well.");
                 s = labelSubStep->text();
@@ -408,25 +426,28 @@ void walkthrough::setupPages(int number, QVector<int> vec)
                 labelSubStep->setText("Substep 1. In the same pot, pour in 4 cups of water.\n"
                                       "Substep 2. In the same pot, add  0.5 cups of kombu. If you dont have kombu, you can skip adding it. \n"
                                       "Substep 3. Bring to boil and then simmer, covered, for 30 minutes (SET TIMER).\n"
-                                      "Substep 4. After 30 minutes, remove lid and pour in 0.5 cup of rice milk\n"
+                                      "Substep 4. After 30 minutes, remove lid and pour in 0.5 cup of rice milk.\n"
                                       "Substep 5. Add 113 grams of rice noodles. \n"
                                       "Substep 6. Simmer for 10 minutes on low heat, or until noodles are soft. Serve and Enjoy!");
                 s = labelSubStep->text();
             }
         }
         else if(recipeID == 715522){ //chicken apple salad
+            mainPage = i;
             if(i == 0){
-                labelSubStep->setText("Substep 1. In a large bowl, add 2.5 cups of chopped chicken\n"
-                                      "Substep 2. In the same bowl, add 3 stalks of chopped celery\n"
-                                      "Substep 3. In the same bowl, add 1 cup of chopped apples. We recommend granny smith!\n"
+                labelSubStep->setText("Substep 1. In a large bowl, add 2.5 cups of chopped <strong>chicken</strong>.\n"
+                                      "Substep 2. In the same bowl, add 3 stalks of chopped <strong>celery</strong>.\n"
+                                      "Substep 3. In the same bowl, add 1 cup of chopped <strong>apples</strong>. We recommend granny smith!\n"
                                       "Substep 4. Mix contents together and set aside.");
                 s = labelSubStep->text();
 
+
+
             }
             if(i == 1){
-                labelSubStep->setText("Substep 1. In a small separate bowl, add 2 tbsp of mayo.\n"
-                                      "Substep 2. In the same bowl, add 0.5 cup of plain yogurt.\n"
-                                      "Substep 3. In the same bowl, add 2 tsp of lemon juice.\n"
+                labelSubStep->setText("Substep 1. In a small separate bowl, add 2 tbsp of <strong>mayo</strong>.\n"
+                                      "Substep 2. In the same bowl, add 0.5 cup of <strong>plain yogurt</strong>.\n"
+                                      "Substep 3. In the same bowl, add 2 tsp of <strong>lemon juice</strong>.\n"
                                       "Substep 4. Mix contents together well until even.");
                 s = labelSubStep->text();
 
@@ -440,6 +461,7 @@ void walkthrough::setupPages(int number, QVector<int> vec)
         else{
             qDebug() << "id not regonized";
         }
+
 
         //string list of all substeps
         list1 = s.split("\n");
@@ -474,11 +496,25 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         //buttons
         //this buttons parent is the main window not the substack
-        QPushButton *subButton = new QPushButton(pageWidget);
-        subButton->setObjectName("subB" + QString::number(i+1));
-        subButton->setText("Next");
-        subButton->setGeometry(530,280,75,25);
-        setSubButtons(subButton);
+        QPushButton *subButtonNext = new QPushButton(pageWidget);
+        subButtonNext->setObjectName("subBN" + QString::number(i+1));
+        subButtonNext->setText("Next");
+        subButtonNext->setGeometry(530,280,75,25);
+        setSubButtonsNext(subButtonNext);
+
+        QPushButton *subButtonPrev = new QPushButton(pageWidget);
+        subButtonPrev->setObjectName("subBP" + QString::number(i+1));
+        subButtonPrev->setText("Previous");
+        subButtonPrev->setGeometry(450,280,75,25);
+        setSubButtonsPrev(subButtonPrev);
+
+
+        //scale
+        QPushButton *scale = new QPushButton(pageWidget);
+        scale->setText("Measure");
+        scale->setObjectName("measureButton");
+        scale->setGeometry(100,280,75,25);
+        setScaleButtons(scale);
 
         //add main page to stack
         ui->stackedWidget->insertWidget(0,pageWidget);
@@ -501,9 +537,6 @@ void walkthrough::setupButtons(int number)
 
     }
 }
-
-
-
 void walkthrough::setSteps(int s)
 {
     numOfSteps = s;
@@ -513,9 +546,6 @@ int walkthrough::getSteps()
 {
     return numOfSteps;
 }
-
-
-
 void walkthrough::onPageClick()
 {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
@@ -536,9 +566,9 @@ void walkthrough::onPageClick()
 
 }
 
-void walkthrough::onSubClick()
+void walkthrough::onSubClickNext()
 {
-    qDebug() << "SUB CALLED!!!!!!!";
+    qDebug() << "SUB NEXT CALLED!!!!!!!";
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     qDebug() << button->objectName();
     QChar number = button->objectName().back();
@@ -554,9 +584,38 @@ void walkthrough::onSubClick()
 
 }
 
+void walkthrough::onSubClickPrev()
+{
+    qDebug() << "SUB PREV CALLED!!!!!!!";
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    qDebug() << button->objectName();
+    QChar number = button->objectName().back();
+    int a = number.digitValue();
+    QStackedWidget *w = ui->stackedWidget->findChild<QStackedWidget*>("subStack"+ QString::number(a));
+    qDebug() << w->objectName();
+
+    int ind = w->currentIndex();
+
+    qDebug() << ind;
+    int p = ind + 1;
+    w->setCurrentIndex(p);
+}
+
 void walkthrough::onScaleClick()
 {
     qDebug() << "Scale Clicked";
+
+    int mainPage = qFabs(ui->stackedWidget->currentIndex() - ui->stackedWidget->count());
+
+    qDebug() << mainPage;
+
+    //FIX THE INDEXES ON THIS
+
+    QStackedWidget *w = ui->stackedWidget->findChild<QStackedWidget*>("subStack"+ QString::number(mainPage));
+    int subPage = w->currentIndex();
+    qDebug() << subPage;
+    //qDebug() << mainAndSubPageArray[0];
+    //qDebug() << mainAndSubPageArray[1];
     measure *meas = new measure(ingr);
     meas->show();
 }
@@ -672,28 +731,30 @@ QList<QString>* walkthrough::split(QString &s){
     splitStrings->insert(1, two);
     return splitStrings;
 }
-
-void walkthrough::setSubButtons(QPushButton *&b)
+void walkthrough::setSubButtonsNext(QPushButton *&b)
 {
-    subButtons.push_back(b);
+    subButtonsNext.push_back(b);
 }
-
-QList<QPushButton*> walkthrough::getSubButtons()
+QList<QPushButton*> walkthrough::getSubButtonsNext()
 {
-    return subButtons;
+    return subButtonsNext;
 }
-
+void walkthrough::setSubButtonsPrev(QPushButton *&b)
+{
+    subButtonsPrev.push_back(b);
+}
+QList<QPushButton *> walkthrough::getSubButtonsPrev()
+{
+    return subButtonsPrev;
+}
 void walkthrough::setScaleButtons(QPushButton *&b)
 {
     scaleButtons.push_back(b);
 }
-
 QList<QPushButton *> walkthrough::getScaleButtons()
 {
     return scaleButtons;
 }
-
-
 QVector<int> walkthrough::getNumberOfSubSteps()
 {
     if(recipeID == 660108){ //kale

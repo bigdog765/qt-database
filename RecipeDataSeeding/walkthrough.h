@@ -24,8 +24,10 @@ public:
     int getSteps();
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
-    void setSubButtons(QPushButton *&b);
-    QList<QPushButton*> getSubButtons();
+    void setSubButtonsNext(QPushButton *&b);
+    QList<QPushButton*> getSubButtonsNext();
+    void setSubButtonsPrev(QPushButton *&b);
+    QList<QPushButton*> getSubButtonsPrev();
     void setScaleButtons(QPushButton *&b);
     QList<QPushButton*> getScaleButtons();
 
@@ -36,7 +38,8 @@ public:
 
 public slots:
     void onPageClick();
-    void onSubClick();
+    void onSubClickNext();
+    void onSubClickPrev();
     void onScaleClick();
 
 private:
@@ -45,9 +48,11 @@ private:
     QVBoxLayout *layout;
     int numOfSteps;
     QList<QString> *measureArray; //this array is used to compare the ingredients to the ingredient in the intruction string, so we can place it in the portioning string
-    QList<QPushButton*> subButtons;
+    QList<QPushButton*> subButtonsNext;
+    QList<QPushButton*> subButtonsPrev;
     QList<QPushButton*> scaleButtons;
     QVector<int> ingr;
+    QVector<int> mainAndSubPageArray = {0,0};
 };
 
 #endif // WALKTHROUGH_H
