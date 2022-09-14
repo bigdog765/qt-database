@@ -17,24 +17,27 @@ class walkthrough : public QMainWindow
 public:
     explicit walkthrough(QJsonArray &steps,int recipeID,QVector<int> ingredients,QWidget *parent = nullptr);
     ~walkthrough();
-    QList<QString>* setupSteps(QJsonArray &steps);
+
     void setupButtons(int number);
-    void setupPages(int number,  QVector<int> vec);
+    void setupPages(int number);
     void setSteps(int s);
     int getSteps();
+
+    //******These functions are NOT used for manually inserted instructions
+    QList<QString>* setupSteps(QJsonArray &steps);
     QList<QString>* splitInstruction(QString &s, int q);
     QList<QString>* split(QString &s);
+    //*************************
+
+
     void setSubButtonsNext(QPushButton *&b);
     QList<QPushButton*> getSubButtonsNext();
     void setSubButtonsPrev(QPushButton *&b);
     QList<QPushButton*> getSubButtonsPrev();
     void setScaleButtons(QPushButton *&b);
     QList<QPushButton*> getScaleButtons();
-
-
     QVector<int> getNumberOfSubSteps();
 
-    //we need a function to measure each ingredient in the instructions
 
 public slots:
     void onPageClick();
@@ -47,7 +50,6 @@ private:
     int recipeID;
     QVBoxLayout *layout;
     int numOfSteps;
-    QList<QString> *measureArray; //this array is used to compare the ingredients to the ingredient in the intruction string, so we can place it in the portioning string
     QList<QPushButton*> subButtonsNext;
     QList<QPushButton*> subButtonsPrev;
     QList<QPushButton*> scaleButtons;
