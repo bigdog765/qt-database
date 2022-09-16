@@ -13,8 +13,6 @@ dashboard::dashboard(QJsonObject &Obj,int id,QWidget *parent) :QMainWindow(paren
     ui->setupUi(this);
     displayRecipeInfo(Obj);
 
-
-
 }
 
 void dashboard::displayRecipeInfo(QJsonObject &Obj)
@@ -26,12 +24,14 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     QString nutrition;
     QString ingredients;
     QString equipment;
+    QString micro;
 
     //nutrition{nutrients[{Calories,fat,etc.}{Calories,fat,etc.}]} Mainobj->obj->array->obj
     for(auto i = Obj.begin(); i != Obj.end();i++){ 
         if(i.key().toUtf8() == "nutrition"){ //nutrition key is an object
             QJsonObject nutrObj = i->toObject();
-            nutrition = getTotalNutrients(nutrObj);
+            nutrition = getTotalNutrients(nutrObj,0);
+            micro = getTotalNutrients(nutrObj,1);
         }
         else if(i.key().toUtf8() == "extendedIngredients"){ //extended ingredient key is an array
             QJsonArray ingrArr = i->toArray();
@@ -76,7 +76,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     ui->equipment->setText(equipment);
 }
 
-QString dashboard::getTotalNutrients(QJsonObject &Obj)//arr->
+QString dashboard::getTotalNutrients(QJsonObject &Obj, bool microNut)//arr->
 {
     QJsonArray nutrients;
     for(auto i = Obj.begin(); i != Obj.end();i++){
@@ -91,7 +91,7 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)//arr->
     double amount;
     QString unit;
     QString result = "Total Nutrients: ";
-    micro = "Extended Nutrients: ";
+    QString micro = "Extended Nutrients: ";
 
     //json file parses keys in althebetical order
     for(auto j = nutrients.begin(); j != nutrients.end();j++){
@@ -144,7 +144,11 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj)//arr->
     }
     qDebug() << result;
     qDebug() << micro;
-    return result;
+    if(!microNut){
+        return result;
+    }
+    else return micro;
+
 
 }
 

@@ -1,21 +1,23 @@
 #include "measure.h"
 #include "ui_measure.h"
 #include "dashboard.h"
+#include "QNetworkAccessManager"
+#include "QNetworkReply"
 
-measure::measure(QVector<int> ingr,int id,QVector<int> page,QWidget *parent) :
+measure::measure(int id,QVector<int> page,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::measure)
 {
     ui->setupUi(this);
-    ingrIds = ingr;
+
     recipeID = id;
     pageIndex = page;
     //in the dashboard function, create a function that returns an array of all ingredient ids
-    printIngredients(ingr);
+    setID();
 
 }
 
-void measure::printIngredients(QVector<int> ingr)
+void measure::setID()
 {
     int INGR_ID = 0;
 
@@ -341,11 +343,69 @@ void measure::printIngredients(QVector<int> ingr)
         }
     }
 
-    for(int i = 0; i < ingr.length(); i++){
-        //qDebug() << ingr.at(i);
-
+    if(INGR_ID == 0){
+        ui->measureIngredient->setText("No Ingredient to Weigh");
     }
-    ui->measureIngredient->setText(QString::number(INGR_ID));
+    else showIngredient(INGR_ID);
+
+
+}
+
+void measure::showIngredient(int id)
+{
+
+    QByteArray RECIPE_URL = "https://api.spoonacular.com/food/ingredients/" + QString::number(id).toUtf8() + "/information?amount=1&apiKey=81e81ac3e7c14d2b9913ceebbbb4025a";
+
+    QUrl ingr_url(RECIPE_URL);
+    QNetworkRequest ingr_request(ingr_url);
+
+    ingr_request.setRawHeader("Content-Type", "application/json");
+
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
+    QEventLoop loop;
+
+        QObject::connect(manager,
+                         SIGNAL(finished(QNetworkReply*)),
+                         &loop,
+                         SLOT(quit()));
+
+
+
+        QNetworkReply* reply = manager->get(ingr_request);
+        loop.exec();
+        QString response = (QString)reply->readAll();
+        qDebug () << response;
+
+
+
+        QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
+        QJsonObject jObj = doc.object();
+        QJsonObject nutrObj;
+        QJsonValue v;
+        QString title;
+        QString weight;
+        for(auto i = jObj.begin(); i != jObj.end();i++){
+            if(i.key().toUtf8() == "nutrition"){ //nutrition key is an object
+                nutrObj = i->toObject();
+            }
+            //fetch relevant keys
+            if(i.key().toUtf8() == "name"){
+                v = jObj.value("name");
+                title = v.toString();
+            }
+        }
+
+        //static method call
+        QString nutrients = dashboard::getTotalNutrients(nutrObj,0);
+        QString nutrientsMicro = dashboard::getTotalNutrients(nutrObj,1);
+
+        ui->mainNutrients->setText(nutrients);
+        ui->mainNutrients->setWordWrap(true);
+        ui->microNutrients->setText(nutrientsMicro);
+        ui->microNutrients->setWordWrap(true);
+
+        ui->measureIngredient->setText(title);
 }
 
 measure::~measure()

@@ -12,13 +12,13 @@ class measure : public QDialog
     Q_OBJECT
 
 public:
-    explicit measure(QVector<int> ingr,int id,QVector<int> pages,QWidget *parent = nullptr);
-    void printIngredients(QVector<int> ingr);
+    explicit measure(int id,QVector<int> pages,QWidget *parent = nullptr);
+    void setID();
+    void showIngredient(int id);
     ~measure();
 
 private:
     Ui::measure *ui;
-    QVector<int> ingrIds;
     int recipeID;
     QVector<int> pageIndex = {0,0};
 };
