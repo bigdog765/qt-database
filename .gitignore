@@ -1,1 +1,7 @@
 RecipeDataSeeding/*.user
+<<<<<<< HEAD
+RecipeDataSeeding/RecipeDataSeeding.pro.user
+=======
+*.user
+*.idx
+>>>>>>> 2010940a21129d6bab32aecb45016eab98b4cadc

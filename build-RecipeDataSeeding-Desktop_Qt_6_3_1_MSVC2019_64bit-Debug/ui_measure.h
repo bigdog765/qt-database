@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QLabel>
 
 QT_BEGIN_NAMESPACE
 
@@ -21,6 +22,7 @@ class Ui_measure
 {
 public:
     QDialogButtonBox *buttonBox;
+    QLabel *measureIngredient;
 
     void setupUi(QDialog *measure)
     {
@@ -32,6 +34,9 @@ public:
         buttonBox->setGeometry(QRect(30, 240, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        measureIngredient = new QLabel(measure);
+        measureIngredient->setObjectName(QString::fromUtf8("measureIngredient"));
+        measureIngredient->setGeometry(QRect(150, 110, 49, 16));
 
         retranslateUi(measure);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, measure, qOverload<>(&QDialog::accept));
@@ -43,6 +48,7 @@ public:
     void retranslateUi(QDialog *measure)
     {
         measure->setWindowTitle(QCoreApplication::translate("measure", "Dialog", nullptr));
+        measureIngredient->setText(QCoreApplication::translate("measure", "TextLabel", nullptr));
     } // retranslateUi
 
 };

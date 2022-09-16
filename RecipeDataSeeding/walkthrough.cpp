@@ -25,7 +25,7 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QVector<int> ingredients,QWidg
 
 
     //this function was modified to support the manually instructions, for the second parameter it had a qlist string of steps
-    setupPages(numOfSteps, vec); //parameters: number of steps, array of number of substeps for each parent step
+    setupPages(numOfSteps); //parameters: number of steps, array of number of substeps for each parent step
 
 
     //below was unchanged
@@ -155,9 +155,7 @@ QList<QString>* walkthrough::setupSteps(QJsonArray &steps)
 
 //MANUAL STEPS
 
-
-//parameter vec is not used
-void walkthrough::setupPages(int number, QVector<int> vec)
+void walkthrough::setupPages(int number)
 {
 
     QFont step_f("Segoe UI",15,QFont::Bold);
@@ -174,19 +172,12 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
 
 
-
         QStringList list1;
         QString s;
-        int mainPage = 0;
-        int subPage = 0;
-
-        mainAndSubPageArray[0] = i;
-        mainAndSubPageArray[1] = subPage;
 
         //maunally insert all substeps
         QLabel *labelSubStep = new QLabel(pageWidget);
         if(recipeID == 660108){ //kale
-            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take and wash 1 bunch of Kale, pat dry and remove the leaves from the stems.\n"
                                       "Substep 2. Now, chop the leaves and place in a large bowl (place in VersaBowl if provided).\n"
@@ -210,8 +201,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
             }
         }
         else if(recipeID == 646567){ //chili
-            mainPage = i;
-
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take a medium saucepan and place on medium heat over the stove. (SHOW ICON OF PAN)\n"
                                       "Substep 2. Once hot, place ground beef in a sauce pan and brown 1135 grams of ground beef, breaking it into small pieces as it cooks.\n"
@@ -244,8 +233,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 643642){ //mac
-            mainPage = i;
-
             if(i == 0){
                 labelSubStep->setText("Substep 1. Prepare macaroni as instructed throughout the remainder of these instructions. Move to the next step once started. (SHOW ICON OF POT COOKING).");
                 s = labelSubStep->text();
@@ -278,7 +265,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 1096070){ //muffin
-            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Preheat oven to 350F. (SHOW ICON OF OVEN)");
                 s = labelSubStep->text();
@@ -325,7 +311,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 1096214){ //basil
-            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Preheat oven to 350F. (SHOW ICON OF OVEN)\n"
                                       "Substep 2. Prepare a baking sheet onto a normal sized oven tray.\n"
@@ -364,7 +349,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 638235){ //parm
-            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1.Preheat oven to 350F. (SHOW ICON OF OVEN)\n"
                                       "Substep 2. Place a large skillet onto the stove over medium-high heat.\n"
@@ -401,7 +385,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         }
         else if(recipeID == 646974){ //ramen
-            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. Take out a blender and set aside.");
                 s = labelSubStep->text();
@@ -433,7 +416,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
             }
         }
         else if(recipeID == 715522){ //chicken apple salad
-            mainPage = i;
             if(i == 0){
                 labelSubStep->setText("Substep 1. In a large bowl, add 2.5 cups of chopped <strong>chicken</strong>.\n"
                                       "Substep 2. In the same bowl, add 3 stalks of chopped <strong>celery</strong>.\n"
@@ -476,7 +458,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
 
         labelSubStep->setParent(subStack);
 
-
         //convert each substep string into a label and add to substep stacked widget
         for(int j = 0; j < list1.size(); j++){
             //labels
@@ -490,9 +471,6 @@ void walkthrough::setupPages(int number, QVector<int> vec)
             subStack->insertWidget(0,a);
             qDebug() << "substack inserted";
         }
-        qDebug() << "stack size:";
-        qDebug() << subStack->count();
-
 
         //buttons
         //this buttons parent is the main window not the substack
@@ -533,7 +511,6 @@ void walkthrough::setupButtons(int number)
          button->setObjectName("step" + QString::number(i));
          //insert buttons into the layout depending on how many steps
          layout->insertWidget(0, button);
-         qDebug() << "Button added";
 
     }
 }
@@ -607,16 +584,17 @@ void walkthrough::onScaleClick()
 
     int mainPage = qFabs(ui->stackedWidget->currentIndex() - ui->stackedWidget->count());
 
-    qDebug() << mainPage;
-
-    //FIX THE INDEXES ON THIS
 
     QStackedWidget *w = ui->stackedWidget->findChild<QStackedWidget*>("subStack"+ QString::number(mainPage));
-    int subPage = w->currentIndex();
+    int subPage = qFabs(w->currentIndex() - w->count());
+
+    qDebug() << mainPage;
     qDebug() << subPage;
-    //qDebug() << mainAndSubPageArray[0];
-    //qDebug() << mainAndSubPageArray[1];
-    measure *meas = new measure(ingr);
+
+    mainAndSubPageArray[0] = mainPage;
+    mainAndSubPageArray[1] = subPage;
+
+    measure *meas = new measure(ingr,recipeID,mainAndSubPageArray);
     meas->show();
 }
 
