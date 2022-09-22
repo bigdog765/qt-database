@@ -23,20 +23,32 @@ class Ui_measure
 public:
     QDialogButtonBox *buttonBox;
     QLabel *measureIngredient;
+    QLabel *mainNutrients;
+    QLabel *microNutrients;
 
     void setupUi(QDialog *measure)
     {
         if (measure->objectName().isEmpty())
             measure->setObjectName(QString::fromUtf8("measure"));
-        measure->resize(400, 300);
+        measure->resize(646, 375);
         buttonBox = new QDialogButtonBox(measure);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(30, 240, 341, 32));
+        buttonBox->setGeometry(QRect(250, 310, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         measureIngredient = new QLabel(measure);
         measureIngredient->setObjectName(QString::fromUtf8("measureIngredient"));
-        measureIngredient->setGeometry(QRect(150, 110, 49, 16));
+        measureIngredient->setGeometry(QRect(10, 40, 221, 71));
+        QFont font;
+        font.setPointSize(12);
+        font.setBold(true);
+        measureIngredient->setFont(font);
+        mainNutrients = new QLabel(measure);
+        mainNutrients->setObjectName(QString::fromUtf8("mainNutrients"));
+        mainNutrients->setGeometry(QRect(250, 40, 361, 51));
+        microNutrients = new QLabel(measure);
+        microNutrients->setObjectName(QString::fromUtf8("microNutrients"));
+        microNutrients->setGeometry(QRect(250, 100, 351, 161));
 
         retranslateUi(measure);
         QObject::connect(buttonBox, &QDialogButtonBox::accepted, measure, qOverload<>(&QDialog::accept));
@@ -49,6 +61,8 @@ public:
     {
         measure->setWindowTitle(QCoreApplication::translate("measure", "Dialog", nullptr));
         measureIngredient->setText(QCoreApplication::translate("measure", "TextLabel", nullptr));
+        mainNutrients->setText(QCoreApplication::translate("measure", "TextLabel", nullptr));
+        microNutrients->setText(QCoreApplication::translate("measure", "TextLabel", nullptr));
     } // retranslateUi
 
 };

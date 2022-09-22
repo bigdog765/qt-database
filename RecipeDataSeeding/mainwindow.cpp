@@ -10,6 +10,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QUrl>
+#include <QUrlQuery>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -94,7 +95,7 @@ int MainWindow::getRecipeId(QString name){
 
 }
 QString MainWindow::getRecipeContent(int id){
-
+/*
     QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=81e81ac3e7c14d2b9913ceebbbb4025a&includeNutrition=true";
 
     QUrl food_url(RECIPE_URL);
@@ -112,39 +113,49 @@ QString MainWindow::getRecipeContent(int id){
                          SLOT(quit()));
 
 
-
         QNetworkReply* reply = manager->get(food_request);
+
+
+
+
         loop.exec();
         QString response = (QString)reply->readAll();
 
         //qDebug() << "Response: " + response;
 
 
-
+*/
     //new version with web layer
-/*
-    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe";
+
+    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe?";
 
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
 
-    food_request.setRawHeader("Content-Type", "application/json");
+    //food_request.setRawHeader("Content-Type", "application/json");
 
 
     QNetworkAccessManager *manager = new QNetworkAccessManager();
-    QEventLoop loop;
-
-        QObject::connect(manager,
-                         SIGNAL(finished(QNetworkReply*)),
-                         &loop,
-                         SLOT(quit()));
+    int b =123;
 
 
-        QNetworkReply* reply = manager->get(food_request);
-        loop.exec();
-        QString response = (QString)reply->readAll();
-        qDebug() << "Response: " + response;
-*/
-    return response;
+    QUrlQuery params;
+    params.addQueryItem("yd","3");
+    QByteArray p = params.query(QUrl::FullyEncoded).toUtf8();
+    QNetworkReply* reply = manager->post(food_request,p);
+
+        QObject::connect(reply,
+                         &QNetworkReply::finished,
+                         [reply](){
+            QString response = (QString)reply->readAll();
+            qDebug() << "Response: " + response;
+
+            reply->deleteLater();
+        });
+    qDebug() << p;
+
+
+
+    return 0;
 
 }
