@@ -116,6 +116,7 @@ QString MainWindow::getRecipeContent(int id){
         QNetworkReply* reply = manager->get(food_request);
         loop.exec();
         QString response = (QString)reply->readAll();
+
         //qDebug() << "Response: " + response;
 
 

@@ -594,7 +594,7 @@ void walkthrough::onScaleClick()
     mainAndSubPageArray[0] = mainPage;
     mainAndSubPageArray[1] = subPage;
 
-    measure *meas = new measure(ingr,recipeID,mainAndSubPageArray);
+    measure *meas = new measure(recipeID,mainAndSubPageArray);
     meas->show();
 }
 

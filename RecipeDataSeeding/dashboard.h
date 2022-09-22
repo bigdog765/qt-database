@@ -17,7 +17,7 @@ class dashboard : public QMainWindow
 public:
     dashboard(QJsonObject &Obj,int recipeID,QWidget *parent = nullptr);
     void displayRecipeInfo(QJsonObject &Obj);
-    QString getTotalNutrients(QJsonObject &Obj);
+    QString static getTotalNutrients(QJsonObject &Obj, bool microNut);
     QString getIngredients(QJsonArray &arr);
     QString getEquipment(QJsonArray &arr);
     int getRecipeID();
@@ -36,7 +36,7 @@ private:
     Ui::dashboard *ui;
     int recipeID;
     QJsonArray *steps; //stores all instruction strings
-    QString micro; //stores all micronutrients
+
     QList<QString> *ingr; //stores all ingredients(this is used for the walkthrough page)
     QVector<int> ingrIDs;
 
