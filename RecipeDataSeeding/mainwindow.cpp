@@ -28,13 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     }
 }
-
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
 void MainWindow::onButtonClick(){
 
     //get specific button from sender
@@ -46,7 +43,6 @@ void MainWindow::onButtonClick(){
     //setup qt json libraries
     QJsonDocument doc = QJsonDocument::fromJson(result.toUtf8());
     QJsonObject jObj = doc.object();
-
 
     //link new window
 
@@ -91,71 +87,45 @@ int MainWindow::getRecipeId(QString name){
     }
     else return -1;
     return id;
-
-
 }
 QString MainWindow::getRecipeContent(int id){
 /*
+ * OLD VERSION
     QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=81e81ac3e7c14d2b9913ceebbbb4025a&includeNutrition=true";
-
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
-
     food_request.setRawHeader("Content-Type", "application/json");
-
-
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     QEventLoop loop;
-
-        QObject::connect(manager,
-                         SIGNAL(finished(QNetworkReply*)),
-                         &loop,
-                         SLOT(quit()));
-
-
+        QObject::connect(manager,SIGNAL(finished(QNetworkReply*)),&loop,SLOT(quit()));
         QNetworkReply* reply = manager->get(food_request);
-
-
-
-
         loop.exec();
         QString response = (QString)reply->readAll();
-
         //qDebug() << "Response: " + response;
-
-
 */
-    //new version with web layer
-
-    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe?";
+    QByteArray rID = QString::number(id).toUtf8();
+    //new version with web layer URL
+    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe?name=" + rID;
 
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
 
     //food_request.setRawHeader("Content-Type", "application/json");
-
-
     QNetworkAccessManager *manager = new QNetworkAccessManager();
-    int b =123;
-
 
     QUrlQuery params;
-    params.addQueryItem("yd","3");
+    params.addQueryItem("name",rID);
     QByteArray p = params.query(QUrl::FullyEncoded).toUtf8();
+
+    QEventLoop loop;
+    QObject::connect(manager,
+                             SIGNAL(finished(QNetworkReply*)),
+                             &loop,
+                             SLOT(quit()));
     QNetworkReply* reply = manager->post(food_request,p);
+    loop.exec();
+    QString response = (QString)reply->readAll();
+    qDebug() << "Response: " + response;
 
-        QObject::connect(reply,
-                         &QNetworkReply::finished,
-                         [reply](){
-            QString response = (QString)reply->readAll();
-            qDebug() << "Response: " + response;
-
-            reply->deleteLater();
-        });
-    qDebug() << p;
-
-
-
-    return 0;
-
+    return response;
 }
