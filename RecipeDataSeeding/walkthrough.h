@@ -36,7 +36,7 @@ public:
     QList<QPushButton*> getSubButtonsPrev();
     void setScaleButtons(QPushButton *&b);
     QList<QPushButton*> getScaleButtons();
-    QVector<int> getNumberOfSubSteps();
+    void setNumberOfSubSteps();
 
 
 public slots:

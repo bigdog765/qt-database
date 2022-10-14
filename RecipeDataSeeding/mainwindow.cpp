@@ -18,10 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    //Group of recipe buttons
     QGroupBox *group = ui->groupBox;
 
     QList<QPushButton*> allPButtons = group->findChildren<QPushButton*>();
-
 
     for(int i=0;i< allPButtons.size();i++){
         connect(allPButtons.at(i),SIGNAL(clicked()),this,SLOT(onButtonClick()));
@@ -38,14 +38,15 @@ void MainWindow::onButtonClick(){
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     qDebug() << button->objectName();
     int id = getRecipeId(button->objectName());
+
+    //Store Json Results in result
     QString result = getRecipeContent(id);
 
     //setup qt json libraries
     QJsonDocument doc = QJsonDocument::fromJson(result.toUtf8());
     QJsonObject jObj = doc.object();
 
-    //link new window
-
+    //Execute dashboard after button click
     dashboard *dash = new dashboard(jObj,id);
     dash->show();
 
@@ -90,8 +91,8 @@ int MainWindow::getRecipeId(QString name){
 }
 QString MainWindow::getRecipeContent(int id){
 /*
- * OLD VERSION
-    QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=81e81ac3e7c14d2b9913ceebbbb4025a&includeNutrition=true";
+ * OLD VERSION (Calling Spoonacular URL directly)
+    QByteArray RECIPE_URL = "https://api.spoonacular.com/recipes/" + QString::number(id).toUtf8() + "/information?apiKey=XXXXXX&includeNutrition=true";
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
     food_request.setRawHeader("Content-Type", "application/json");
@@ -104,8 +105,10 @@ QString MainWindow::getRecipeContent(int id){
         //qDebug() << "Response: " + response;
 */
     QByteArray rID = QString::number(id).toUtf8();
-    //new version with web layer URL
-    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe?name=" + rID;
+
+
+    //NEW VERSION with web layer URL
+    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe?id=" + rID;
 
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
@@ -113,19 +116,17 @@ QString MainWindow::getRecipeContent(int id){
     //food_request.setRawHeader("Content-Type", "application/json");
     QNetworkAccessManager *manager = new QNetworkAccessManager();
 
-    QUrlQuery params;
-    params.addQueryItem("name",rID);
-    QByteArray p = params.query(QUrl::FullyEncoded).toUtf8();
-
     QEventLoop loop;
     QObject::connect(manager,
                              SIGNAL(finished(QNetworkReply*)),
                              &loop,
                              SLOT(quit()));
-    QNetworkReply* reply = manager->post(food_request,p);
+    QNetworkReply* reply = manager->get(food_request);
+    QString requestURL = reply->url().toString().toUtf8();
     loop.exec();
-    QString response = (QString)reply->readAll();
-    qDebug() << "Response: " + response;
+    QString responseS = (QString)reply->readAll();
+    qDebug() << "Request: " + requestURL;
+    qDebug() << "Response: " + responseS;
 
-    return response;
+    return responseS;
 }

@@ -20,15 +20,14 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QVector<int> ingredients,QWidg
     //QList<QString> *listOfSteps = new QList<QString>;
     //listOfSteps = setupSteps(steps);
 
-    //********this part MANUALLY adds each step written out in a string
-    QVector<int> vec = getNumberOfSubSteps();
+    //********this part MANUALLY adds number of sub steps
+    setNumberOfSubSteps();
 
-
-    //this function was modified to support the manually instructions, for the second parameter it had a qlist string of steps
+    //this function was modified to support the MANUALLY added instructions, for the second parameter it had a qlist string of steps
     setupPages(numOfSteps); //parameters: number of steps, array of number of substeps for each parent step
 
 
-    //below was unchanged
+    //All code below Works with AUTOMATED & MANUAL steps
     setupButtons(numOfSteps);
 
     //make a dummy parent for the layout
@@ -53,33 +52,26 @@ walkthrough::walkthrough(QJsonArray &steps,int id,QVector<int> ingredients,QWidg
     //sub step button next
     for(int j=0;j< numOfSteps;j++){
         qDebug() << "button found:";
-           qDebug() << subListNext.at(j)->objectName();
+        qDebug() << subListNext.at(j)->objectName();
         connect(subListNext.at(j),SIGNAL(clicked()),this,SLOT(onSubClickNext()));
 
     }
-    //prev
+    //sub step button prev
     for(int j=0;j< numOfSteps;j++){
         qDebug() << "button found:";
-           qDebug() << subListPrev.at(j)->objectName();
+        qDebug() << subListPrev.at(j)->objectName();
         connect(subListPrev.at(j),SIGNAL(clicked()),this,SLOT(onSubClickPrev()));
 
     }
-
     //scale button
     for(int j=0;j< numOfSteps;j++){
         connect(scaleList.at(j),SIGNAL(clicked()),this,SLOT(onScaleClick()));
 
     }
-
-
     //main step buttons
     for(int i=0;i< numOfSteps;i++){
-
         connect(listB.at(i),SIGNAL(clicked()),this,SLOT(onPageClick()));
-
     }
-
-
 }
 
 walkthrough::~walkthrough()
@@ -170,12 +162,10 @@ void walkthrough::setupPages(int number)
         lblPage->setText("Step " + QString::number(i+1));
         lblPage->setFont(step_f);
 
-
-
         QStringList list1;
         QString s;
 
-        //maunally insert all substeps
+        //MANUALLY insert all substeps
         QLabel *labelSubStep = new QLabel(pageWidget);
         if(recipeID == 660108){ //kale
             if(i == 0){
@@ -537,10 +527,8 @@ void walkthrough::onPageClick()
         QPushButton *clear = new QPushButton();
         clear->setText("clear page");
         ui->stackedWidget->insertWidget(0,clear); //fix this, this button should be created at the same time as the labels
-
     }
     */
-
 }
 
 void walkthrough::onSubClickNext()
@@ -558,7 +546,6 @@ void walkthrough::onSubClickNext()
     qDebug() << ind;
     int p = ind - 1;
     w->setCurrentIndex(p);
-
 }
 
 void walkthrough::onSubClickPrev()
@@ -584,7 +571,6 @@ void walkthrough::onScaleClick()
 
     int mainPage = qFabs(ui->stackedWidget->currentIndex() - ui->stackedWidget->count());
 
-
     QStackedWidget *w = ui->stackedWidget->findChild<QStackedWidget*>("subStack"+ QString::number(mainPage));
     int subPage = qFabs(w->currentIndex() - w->count());
 
@@ -597,7 +583,7 @@ void walkthrough::onScaleClick()
     measure *meas = new measure(recipeID,mainAndSubPageArray);
     meas->show();
 }
-
+//NOTE: This function doesnt execute when MANUALLY inserted instructions are added. This was used for AUTOMATING steps
 //this function will manually split certain instruction strings that are too long
 //instructions that need to be split:
 //kale 1,2
@@ -733,56 +719,35 @@ QList<QPushButton *> walkthrough::getScaleButtons()
 {
     return scaleButtons;
 }
-QVector<int> walkthrough::getNumberOfSubSteps()
+void walkthrough::setNumberOfSubSteps()
 {
     if(recipeID == 660108){ //kale
-        QVector<int> arr = {5,4,1};
         numOfSteps = 3;
-        return arr;
     }
     else if(recipeID == 646567){ //chili
-        QVector<int> arr = {4,5,4,1};
         numOfSteps = 4;
-        return arr;
     }
     else if(recipeID == 643642){ //mac
-        QVector<int> arr = {1,10,4};
         numOfSteps = 3;
-        return arr;
     }
     else if(recipeID == 1096070){ //muffin
-        QVector<int> arr = {1,6,7,4,6};
         numOfSteps = 5;
-        return arr;
     }
     else if(recipeID == 1096214){ //basil
-        QVector<int> arr = {3,4,5,8};
         numOfSteps = 4;
-        return arr;
     }
     else if(recipeID == 638235){ //parm
-        QVector<int> arr = {3,4,5,5,1};
         numOfSteps = 5;
-        return arr;
     }
     else if(recipeID == 646974){ //ramen
-        QVector<int> arr = {1,3,7,6};
         numOfSteps = 4;
-        return arr;
     }
     else if(recipeID == 715522){ //chicken apple salad
-        QVector<int> arr = {4,4,2};
         numOfSteps = 3;
-        return arr;
     }
     else{
         qDebug() << "id not defined";
-        QVector<int> arr;
-        return arr;
     }
-
-
-
 }
 
 

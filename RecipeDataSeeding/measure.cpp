@@ -14,7 +14,6 @@ measure::measure(int id,QVector<int> page,QWidget *parent) :
     pageIndex = page;
     //in the dashboard function, create a function that returns an array of all ingredient ids
     setID();
-
 }
 
 void measure::setID()
@@ -347,37 +346,29 @@ void measure::setID()
         ui->measureIngredient->setText("No Ingredient to Weigh");
     }
     else showIngredient(INGR_ID);
-
-
 }
 
 void measure::showIngredient(int id)
 {
-
-    QByteArray RECIPE_URL = "https://api.spoonacular.com/food/ingredients/" + QString::number(id).toUtf8() + "/information?amount=1&apiKey=81e81ac3e7c14d2b9913ceebbbb4025a";
+    QByteArray idS = QString::number(id).toUtf8();
+    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getIngredient?id="+ idS;
 
     QUrl ingr_url(RECIPE_URL);
     QNetworkRequest ingr_request(ingr_url);
 
     ingr_request.setRawHeader("Content-Type", "application/json");
 
-
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     QEventLoop loop;
-
         QObject::connect(manager,
                          SIGNAL(finished(QNetworkReply*)),
                          &loop,
                          SLOT(quit()));
 
-
-
         QNetworkReply* reply = manager->get(ingr_request);
         loop.exec();
         QString response = (QString)reply->readAll();
         qDebug () << response;
-
-
 
         QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
         QJsonObject jObj = doc.object();

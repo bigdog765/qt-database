@@ -24,7 +24,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //Creating a MainWindow obj will initialize the App
     MainWindow w;
+
     w.show();
 
     return a.exec();

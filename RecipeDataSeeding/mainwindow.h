@@ -16,9 +16,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-
-
     bool wasPressed(QPushButton &push);
     int getRecipeId(QString name);
     QString getRecipeContent(int id);

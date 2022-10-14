@@ -6,7 +6,6 @@
 dashboard::dashboard(QJsonObject &Obj,int id,QWidget *parent) :QMainWindow(parent),ui(new Ui::dashboard)
 {
 
-
     recipeID = id;
     steps = new QJsonArray();
 
@@ -58,12 +57,10 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
 
                 v = Obj.value("servings");
                 serving = v.toInt();
-
             }
             else if(q == "readyInMinutes"){
                 v = Obj.value("readyInMinutes");
                 prep = v.toInt();
-
             }
         }
     }
@@ -76,7 +73,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     ui->equipment->setText(equipment);
 }
 
-QString dashboard::getTotalNutrients(QJsonObject &Obj, bool microNut)//arr->
+QString dashboard::getTotalNutrients(QJsonObject &Obj, bool microNut)
 {
     QJsonArray nutrients;
     for(auto i = Obj.begin(); i != Obj.end();i++){
@@ -123,8 +120,6 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj, bool microNut)//arr->
                     micro.append(k.value().toString() + ": ");
                 }
             }
-
-
             //obtain specific amount plus unit
             if(k.key().toUtf8() == "amount"){
                 amount = k.value().toDouble();
@@ -148,8 +143,6 @@ QString dashboard::getTotalNutrients(QJsonObject &Obj, bool microNut)//arr->
         return result;
     }
     else return micro;
-
-
 }
 
 QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
@@ -183,7 +176,6 @@ QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
         }
         result.append(QString::number(amount) + " " + unit + " " + name + ", ");
     }
-
     return result;
 }
 
@@ -214,7 +206,6 @@ QString dashboard::getEquipment(QJsonArray &arr)
                                         }
                                         else{
                                             result.append(newEquip + ", ");
-
                                         }
                                     }
                                 }
@@ -224,7 +215,6 @@ QString dashboard::getEquipment(QJsonArray &arr)
                 }
             }
         }
-
     }
     return result;
 }
@@ -260,7 +250,7 @@ void dashboard::on_start_clicked()
     for(int i = 0; i < ingrIDs.size(); i++){
         qDebug() << ingrIDs.at(i);
     }
-    //link new window
+    //After Start Recipe clicked, link new Walkthrough of Steps
     walkthrough *walk = new walkthrough(*steps,recipeID,ingrIDs);
     walk->show();
 }
