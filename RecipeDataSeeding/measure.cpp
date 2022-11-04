@@ -372,28 +372,66 @@ void measure::showIngredient(int id)
 
         QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
         QJsonObject jObj = doc.object();
-        QJsonObject nutrObj;
+        QJsonObject n;
+        QJsonArray nutrientsA;
         QJsonValue v;
         QString title;
-        QString weight;
-        for(auto i = jObj.begin(); i != jObj.end();i++){
-            if(i.key().toUtf8() == "nutrition"){ //nutrition key is an object
-                nutrObj = i->toObject();
+        QJsonObject data;
+        QString result;
+        double amount;
+        QString unit;
+
+
+        for(auto d = jObj.begin(); d!= jObj.end(); d++){
+            if(d.key() == "data"){
+                data = d->toObject();
+            }
+        }
+        for(auto i = data.begin(); i != data.end();i++){
+            if(i.key().toUtf8() == "nutrition"){ //nutrition key is an array
+                n = i->toObject();
+                for(auto j = n.begin();j!=n.end();j++){
+                    if(j.key().toUtf8() == "nutrients"){
+                        nutrientsA = j->toArray();
+                    }
+                }
+
             }
             //fetch relevant keys
             if(i.key().toUtf8() == "name"){
-                v = jObj.value("name");
+                qDebug() << "Test ingredient name";
+                v = i.value();
                 title = v.toString();
             }
         }
 
-        //static method call
-        QString nutrients = dashboard::getTotalNutrients(nutrObj,0);
-        QString nutrientsMicro = dashboard::getTotalNutrients(nutrObj,1);
 
-        ui->mainNutrients->setText(nutrients);
-        ui->mainNutrients->setWordWrap(true);
-        ui->microNutrients->setText(nutrientsMicro);
+
+
+        for(auto j = nutrientsA.begin(); j != nutrientsA.end();j++){
+
+            QJsonObject f;
+            f =j->toObject();
+            for(auto k = f.begin(); k != f.end();k++){
+                if(k.key().toUtf8() == "name")
+                    result.append(k.value().toString() + ": ");
+
+                //obtain specific amount plus unit
+                if(k.key().toUtf8() == "amount"){
+                    amount = k.value().toDouble();
+                }
+                if(k.key().toUtf8() == "unit"){
+                    unit = k.value().toString().toUtf8();
+                }
+            }
+
+            result.append(QString::number(amount) + unit + " ");
+        }
+
+
+
+
+        ui->microNutrients->setText(result);
         ui->microNutrients->setWordWrap(true);
 
         ui->measureIngredient->setText(title);

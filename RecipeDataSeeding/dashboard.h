@@ -17,7 +17,8 @@ class dashboard : public QMainWindow
 public:
     dashboard(QJsonObject &Obj,int recipeID,QWidget *parent = nullptr);
     void displayRecipeInfo(QJsonObject &Obj);
-    QString static getTotalNutrients(QJsonObject &Obj, bool microNut);
+    QString static getTotalNutrition(QJsonArray &Arr);
+    QString static getTotalNutrient(QJsonArray &Arr);
     QString getIngredients(QJsonArray &arr);
     QString getEquipment(QJsonArray &arr);
     int getRecipeID();

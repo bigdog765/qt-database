@@ -18,21 +18,33 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
 {
     QJsonValue v;
     QString title;
-    int prep;
+    QString prep;
     int serving;
     QString nutrition;
     QString ingredients;
     QString equipment;
     QString micro;
+    QJsonObject data;
 
-    //nutrition{nutrients[{Calories,fat,etc.}{Calories,fat,etc.}]} Mainobj->obj->array->obj
-    for(auto i = Obj.begin(); i != Obj.end();i++){ 
-        if(i.key().toUtf8() == "nutrition"){ //nutrition key is an object
-            QJsonObject nutrObj = i->toObject();
-            nutrition = getTotalNutrients(nutrObj,0);
-            micro = getTotalNutrients(nutrObj,1);
+    for(auto d = Obj.begin(); d!= Obj.end(); d++){
+        if(d.key() == "data"){
+            data = d->toObject();
         }
-        else if(i.key().toUtf8() == "extendedIngredients"){ //extended ingredient key is an array
+    }
+
+
+    for(auto i = data.begin(); i != data.end();i++){
+        if(i.key().toUtf8() == "nutrition"){ //nutrition key is an array
+
+            QJsonArray nutritionArr = i->toArray();
+            nutrition = getTotalNutrition(nutritionArr);
+
+        }
+        else if(i.key().toUtf8() == "nutrients"){
+            QJsonArray nutrientArr = i->toArray();
+            micro = getTotalNutrient(nutrientArr);
+        }
+        else if(i.key().toUtf8() == "ingredients"){ //extended ingredient key is an array
             QJsonArray ingrArr = i->toArray();
             ingredients = getIngredients(ingrArr);
         }
@@ -50,99 +62,103 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
 
             //fetch relevant keys
             if(q == "title"){
-                v = Obj.value("title");
+                v = data.value("title");
                 title = v.toString();
+                qDebug() << "Title:" + title;
             }
-            else if(q == "servings"){
-
-                v = Obj.value("servings");
+            else if(q == "serves"){
+                v = data.value("serves");
                 serving = v.toInt();
             }
-            else if(q == "readyInMinutes"){
-                v = Obj.value("readyInMinutes");
-                prep = v.toInt();
+            else if(q == "cookingTime"){
+                v = data.value("cookingTime");
+                prep = v.toString();
             }
         }
     }
     ui->recipeName->setText(title);
     ui->servingSize->setText("Servings: " + QString::number(serving));
-    ui->prepTime->setText("Time to Complete: " + QString::number(prep) + " min");
+    ui->prepTime->setText("Time to Complete: " + prep);
     ui->totalNutrition->setText(nutrition);
     ui->extendedNutrition->setText(micro);
     ui->ingredients->setText(ingredients);
     ui->equipment->setText(equipment);
 }
 
-QString dashboard::getTotalNutrients(QJsonObject &Obj, bool microNut)
+QString dashboard::getTotalNutrition(QJsonArray &Arr)
 {
-    QJsonArray nutrients;
-    for(auto i = Obj.begin(); i != Obj.end();i++){
-
-        if(i.key().toUtf8() == "nutrients"){
-            qDebug() << "key is nutrients";
-            nutrients = i->toArray();
-            break;
-        }
-    }
-    bool microB = true;
+    qDebug() << "Nutrition";
     double amount;
     QString unit;
-    QString result = "Total Nutrients: ";
-    QString micro = "Extended Nutrients: ";
+    QString result = "Total Nutrition: ";
 
     //json file parses keys in althebetical order
-    for(auto j = nutrients.begin(); j != nutrients.end();j++){
+    for(auto j = Arr.begin(); j != Arr.end();j++){
 
         QJsonObject f;
         f =j->toObject();
         for(auto k = f.begin(); k != f.end();k++){
             //check for certain nutritional value
             if(k.value() == "Calories"){
-               microB = false;
+
                result.append("Calories: ");
             }
             else if(k.value() == "Fat"){
-               microB = false;
+
                result.append("Fat: ");
             }
             else if(k.value() == "Carbohydrates"){
-               microB = false;
+
                result.append("Carbohydrates: ");
             }
             else if(k.value() == "Protein"){
-               microB = false;
+
                result.append("Protein: ");
             }
-            //micros
-            else{
-                if(k.key() == "name"){
-                    microB = true;
-                    micro.append(k.value().toString() + ": ");
-                }
-            }
+
             //obtain specific amount plus unit
             if(k.key().toUtf8() == "amount"){
                 amount = k.value().toDouble();
             }
-            if(k.key().toUtf8() == "unit"){
+            if(k.key().toUtf8() == "amountUnit"){
                 unit = k.value().toString().toUtf8();
             }
+        }
 
-        }
-        if(!microB){
-
-            result.append(QString::number(amount) + unit + " ");
-        }
-        else{
-            micro.append(QString::number(amount) + unit + " ");
-        }
+        result.append(QString::number(amount) + unit + " ");
     }
     qDebug() << result;
-    qDebug() << micro;
-    if(!microNut){
-        return result;
+    return result;
+}
+QString dashboard::getTotalNutrient(QJsonArray &Arr)
+{
+    qDebug() << "Nutrients";
+    double amount;
+    QString unit;
+    QString result = "Total Micro Nutrients: ";
+
+    //json file parses keys in althebetical order
+    for(auto j = Arr.begin(); j != Arr.end();j++){
+
+        QJsonObject f;
+        f =j->toObject();
+        for(auto k = f.begin(); k != f.end();k++){
+            if(k.key().toUtf8() == "title")
+                result.append(k.value().toString() + ": ");
+
+            //obtain specific amount plus unit
+            if(k.key().toUtf8() == "amount"){
+                amount = k.value().toDouble();
+            }
+            if(k.key().toUtf8() == "amountUnit"){
+                unit = k.value().toString().toUtf8();
+            }
+        }
+
+        result.append(QString::number(amount) + unit + " ");
     }
-    else return micro;
+    qDebug() << result;
+    return result;
 }
 
 QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
@@ -167,10 +183,10 @@ QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
                 ingr->push_back(name);
 
             }
-            else if(j.key() == "amount"){
+            else if(j.key() == "amountUS"){
                 amount = j.value().toDouble();
             }
-            else if(j.key() == "unit"){
+            else if(j.key() == "amountUnitUS"){
                 unit = j.value().toString();
             }
         }
@@ -178,6 +194,7 @@ QString dashboard::getIngredients(QJsonArray &arr)//arr->obj->key
     }
     return result;
 }
+
 
 QString dashboard::getEquipment(QJsonArray &arr)
 {
