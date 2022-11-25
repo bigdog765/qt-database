@@ -24,16 +24,12 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
     QString ingredients;
     QString equipment;
     QString micro;
-    QJsonObject data;
-
-    for(auto d = Obj.begin(); d!= Obj.end(); d++){
-        if(d.key() == "data"){
-            data = d->toObject();
-        }
-    }
 
 
-    for(auto i = data.begin(); i != data.end();i++){
+    QJsonObject result = Obj.begin()->toObject();
+
+    for(auto i = result.begin(); i != result.end();i++){
+        qDebug() << i.key();
         if(i.key().toUtf8() == "nutrition"){ //nutrition key is an array
 
             QJsonArray nutritionArr = i->toArray();
@@ -48,7 +44,7 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
             QJsonArray ingrArr = i->toArray();
             ingredients = getIngredients(ingrArr);
         }
-        else if(i.key().toUtf8() == "analyzedInstructions"){
+        else if(i.key().toUtf8() == "steps"){
 
             QJsonArray steps = i->toArray();
             equipment = getEquipment(steps);
@@ -62,16 +58,16 @@ void dashboard::displayRecipeInfo(QJsonObject &Obj)
 
             //fetch relevant keys
             if(q == "title"){
-                v = data.value("title");
+                v = result.value("title");
                 title = v.toString();
                 qDebug() << "Title:" + title;
             }
             else if(q == "serves"){
-                v = data.value("serves");
+                v = result.value("serves");
                 serving = v.toInt();
             }
             else if(q == "cookingTime"){
-                v = data.value("cookingTime");
+                v = result.value("cookingTime");
                 prep = v.toString();
             }
         }

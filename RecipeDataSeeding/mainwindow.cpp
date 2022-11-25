@@ -44,10 +44,11 @@ void MainWindow::onButtonClick(){
 
     //setup qt json libraries
     QJsonDocument doc = QJsonDocument::fromJson(result.toUtf8());
-    QJsonObject jObj = doc.object();
+    QJsonObject resultObj = doc.object();
+
 
     //Execute dashboard after button click
-    dashboard *dash = new dashboard(jObj,id);
+    dashboard *dash = new dashboard(resultObj,id);
     dash->show();
 
 }
@@ -104,14 +105,23 @@ QString MainWindow::getRecipeContent(int id){
         QString response = (QString)reply->readAll();
         //qDebug() << "Response: " + response;
 */
-    QByteArray rID = QString::number(id).toUtf8();
+    QString rID = QString::number(id).toUtf8();
+
+    QJsonObject obj;
+    obj["id"] = rID;
+    QJsonObject parent;
+    parent["data"] = obj;
+    QJsonDocument doc(parent);
+    QByteArray data = doc.toJson();
+    qDebug() << data;
 
 
     //NEW VERSION with web layer URL
-    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe?id=" + rID;
+    QByteArray RECIPE_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe";
 
     QUrl food_url(RECIPE_URL);
     QNetworkRequest food_request(food_url);
+    food_request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     //food_request.setRawHeader("Content-Type", "application/json");
     QNetworkAccessManager *manager = new QNetworkAccessManager();
@@ -121,7 +131,7 @@ QString MainWindow::getRecipeContent(int id){
                              SIGNAL(finished(QNetworkReply*)),
                              &loop,
                              SLOT(quit()));
-    QNetworkReply* reply = manager->get(food_request);
+    QNetworkReply* reply = manager->post(food_request,data);
     QString requestURL = reply->url().toString().toUtf8();
     loop.exec();
     QString responseS = (QString)reply->readAll();
