@@ -25,8 +25,6 @@
 #include <QString>
 #include <QStringList>
 
-
-
 MainWindow::MainWindow(QWidget *parent)
    : QMainWindow(parent)
    , ui(new Ui::MainWindow)
@@ -54,21 +52,28 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     //implement SPECIFIC ingredient nutritional info
     QString name = item->text();
+
     ui->titleFood->setText("Nutrition Preview of " + name);
     qDebug() << "\n\n\n\n\n";
     getFoodNutrients(name);
 }
 void MainWindow::getFoodNutrients(QString foodName){
-    const QByteArray APP_ID = "3a3bcc0b";
-    const QByteArray API_KEY = "9fd8be4795a30b3146947c62eaf3795f";
-    const QByteArray FOOD_RESULT_URL = "https://trackapi.nutritionix.com/v2/natural/nutrients";
+    QJsonArray *list = new QJsonArray();
+    list->append(foodName);
+    QJsonObject obj;
+    obj["ingredients"] = QJsonValue(*list);
+    QJsonObject parent;
+    parent["data"] = obj;
+    QJsonDocument docJ(parent);
+    QByteArray data = docJ.toJson();
+    qDebug() << data;
+
+    const QByteArray FOOD_RESULT_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getIngredient?id=";
 
     QUrl food_url(FOOD_RESULT_URL);
     QNetworkRequest food_request(food_url);
 
     food_request.setRawHeader("Content-Type", "application/json");
-    food_request.setRawHeader("x-app-id", APP_ID);
-    food_request.setRawHeader("x-app-key", API_KEY);
 
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     QEventLoop loop;
@@ -90,7 +95,6 @@ void MainWindow::getFoodNutrients(QString foodName){
         for(auto i = jObj.begin(); i != jObj.end();i++){
             if(i->isArray()){
                 QJsonArray jArr = i->toArray();
-                checkArray(jArr,true);
             }
             else if(!i->isArray())
                 qDebug() << "Json file has no arrays.";
@@ -102,21 +106,29 @@ void MainWindow::getFoodNutrients(QString foodName){
 
 void MainWindow::getSearchResults(QString textQuery){
 
-   const QByteArray APP_ID = "3a3bcc0b";
-   const QByteArray API_KEY = "9fd8be4795a30b3146947c62eaf3795f";
-   const QByteArray SEARCH_RESULT_URL = "https://trackapi.nutritionix.com/v2/search/instant?query=";
+    QJsonArray *list = new QJsonArray();
+    QStringList str_l = textQuery.split(',');
+    foreach (QString str, str_l) {
+        list->append(str);
+    }
+    QJsonObject obj;
+    obj["ingredients"] = QJsonValue(*list);
+    QJsonObject parent;
+    parent["data"] = obj;
+    QJsonDocument docJ(parent);
+    QByteArray data = docJ.toJson();
+    qDebug() << data;
 
 
-   QUrl search_url(SEARCH_RESULT_URL + textQuery + "");
-       QNetworkRequest search_request(search_url);
-
-       search_request.setRawHeader("Content-Type", "application/json");
-       search_request.setRawHeader("x-app-id", APP_ID);
-       search_request.setRawHeader("x-app-key", API_KEY);
+   const QByteArray SEARCH_RESULT_URL = "https://us-central1-versaware-dev.cloudfunctions.net/recipeSearch";
 
 
+   QUrl search_url(SEARCH_RESULT_URL);
+   QNetworkRequest search_request(search_url);
 
-       QNetworkAccessManager *manager = new QNetworkAccessManager();
+   search_request.setRawHeader("Content-Type", "application/json");
+
+        QNetworkAccessManager *manager = new QNetworkAccessManager();
        QEventLoop loop;
 
            QObject::connect(manager,
@@ -124,7 +136,7 @@ void MainWindow::getSearchResults(QString textQuery){
                             &loop,
                             SLOT(quit()));
 
-           QNetworkReply* reply = manager->get(search_request);
+           QNetworkReply* reply = manager->post(search_request,data);
            loop.exec();
 
            //display raw json
@@ -137,53 +149,27 @@ void MainWindow::getSearchResults(QString textQuery){
            QJsonObject jObj = doc.object();
 
 
-           for(auto i = jObj.begin(); i != jObj.end();i++){
-               bool branded;
-               branded = i.key().toStdString() == "branded";
-
-               if(i->isArray() && !branded){ //change this if we want to display branded ingredients
-                   QJsonArray jArr = i->toArray();
-                   checkArray(jArr,false);
-               }
-               else if(!i->isArray())
-                   qDebug() << "Json file has no arrays.";
-
-           }
-
+           QJsonArray result = jObj.begin()->toArray();
+            populateSearchResults(result);
 }
-void MainWindow::checkArray(QJsonArray &a, bool nutr){
-   auto i = a.begin();
 
-   if(i->isArray()){ //check for nested arrays
-        QJsonArray b = i->toArray();
-        qDebug() << "nested array";
-       checkArray(b,nutr); //recursive call
-   }
-   else{
-       if(nutr)
-           showNutrients(a);
-       else populateSearchResults(a);
-       return;
-   }
-}
 void MainWindow::populateSearchResults(QJsonArray &a){
     const int RESULT_LIMIT = 30;
-    bool empty = true;
     int ctr = 0;
 
-    for(auto k = a.begin(); k != a.end(); k++){ //return all values with key food_name
+    for(auto k = a.begin(); k != a.end(); k++){ //return all values with key title
         QJsonObject returnObject = k->toObject();
-        if(returnObject.contains("food_name")){
-            ui->listWidget->addItem(returnObject.value("food_name").toString());
-            empty = false;
+        if(returnObject.contains("title")){
+            ui->listWidget->addItem(returnObject.value("title").toString());
+            QListWidgetItem *p = ui->listWidget->currentItem();
+           //FIX THIS
+
             ctr++;
         }
-
         if(ctr >= RESULT_LIMIT)
             break;
     }
-    if(empty)
-        qDebug() << "No results.";
+
 }
 
 //this is just the preview of nutritional information

@@ -18,7 +18,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void getSearchResults(QString textQuery);
-    void checkArray(QJsonArray &a,bool nutr);
     void populateSearchResults(QJsonArray &a);
     void getFoodNutrients(QString foodName);
     void showNutrients(QJsonArray &a);
