@@ -25,6 +25,13 @@
 #include <QString>
 #include <QStringList>
 
+struct recipe {
+    QString name;
+    int id;
+};
+
+QVector<recipe> recList;
+
 MainWindow::MainWindow(QWidget *parent)
    : QMainWindow(parent)
    , ui(new Ui::MainWindow)
@@ -43,6 +50,7 @@ void MainWindow::on_pushButton_clicked()
 {
 
    QString queryIn = ui->in1->text();
+
    ui->listWidget->clear();
    getSearchResults(queryIn);
 
@@ -58,18 +66,28 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     getFoodNutrients(name);
 }
 void MainWindow::getFoodNutrients(QString foodName){
-    QJsonArray *list = new QJsonArray();
-    list->append(foodName);
+
+    int id = 0;
+    for (int i = 0; i < recList.size(); ++i) {
+        if (recList.at(i).name == foodName)
+            id = recList.at(i).id;
+    }
+    QString idS = QString::number(id);
+    qDebug() << idS;
+
+
+
     QJsonObject obj;
-    obj["ingredients"] = QJsonValue(*list);
-    QJsonObject parent;
-    parent["data"] = obj;
-    QJsonDocument docJ(parent);
-    QByteArray data = docJ.toJson();
-    qDebug() << data;
+        obj["id"] = QJsonValue(idS);
+        QJsonObject parent;
+        parent["data"] = obj;
+        QJsonDocument docJ(parent);
+        QByteArray data = docJ.toJson();
+        qDebug() << data;
 
-    const QByteArray FOOD_RESULT_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getIngredient?id=";
+    const QByteArray FOOD_RESULT_URL = "https://us-central1-versaware-dev.cloudfunctions.net/getRecipe";
 
+    qDebug() << FOOD_RESULT_URL;
     QUrl food_url(FOOD_RESULT_URL);
     QNetworkRequest food_request(food_url);
 
@@ -83,23 +101,16 @@ void MainWindow::getFoodNutrients(QString foodName){
                          &loop,
                          SLOT(quit()));
 
-        QByteArray dataString = "{ \"query\": \""+ foodName.toUtf8() +"\" }";
-        QNetworkReply* reply = manager->post(food_request, dataString);
+
+        QNetworkReply* reply = manager->post(food_request,data);
         loop.exec();
         QString response = (QString)reply->readAll();
         qDebug() << "Response: " + response;
 
         QJsonDocument doc = QJsonDocument::fromJson(response.toUtf8());
         QJsonObject jObj = doc.object();
-        //get serving_qty, serving_unit, serving_weight_grams,calories,fat,carbs,protein.(Preview)
-        for(auto i = jObj.begin(); i != jObj.end();i++){
-            if(i->isArray()){
-                QJsonArray jArr = i->toArray();
-            }
-            else if(!i->isArray())
-                qDebug() << "Json file has no arrays.";
-
-        }
+        QJsonObject result = jObj.begin()->toObject();
+        showNutrients(result);
 
 }
 
@@ -154,16 +165,20 @@ void MainWindow::getSearchResults(QString textQuery){
 }
 
 void MainWindow::populateSearchResults(QJsonArray &a){
-    const int RESULT_LIMIT = 30;
+    const int RESULT_LIMIT = 40;
     int ctr = 0;
+    recList.clear();
 
     for(auto k = a.begin(); k != a.end(); k++){ //return all values with key title
         QJsonObject returnObject = k->toObject();
         if(returnObject.contains("title")){
-            ui->listWidget->addItem(returnObject.value("title").toString());
-            QListWidgetItem *p = ui->listWidget->currentItem();
-           //FIX THIS
-
+            QString title = returnObject.value("title").toString();
+            ui->listWidget->addItem(title);
+            if(returnObject.contains("id")){
+                QString idS = returnObject.value("id").toString();
+                int id = idS.toInt();
+                recList.append({title,id});
+            }
             ctr++;
         }
         if(ctr >= RESULT_LIMIT)
@@ -173,59 +188,32 @@ void MainWindow::populateSearchResults(QJsonArray &a){
 }
 
 //this is just the preview of nutritional information
-void MainWindow::showNutrients(QJsonArray &a){
-    bool empty = false;
+void MainWindow::showNutrients(QJsonObject &obj){
+
     QString nutrResult;
+    QJsonArray nutrition;
     //return all values with key serving_qty, serving_unit, serving_weight_grams,calories,fat,carbs,protein
+        for(auto i = obj.begin(); i !=obj.end(); i++){
+            if(i.key() == "nutrition"){
+                nutrition = i.value().toArray();
+                qDebug() << "Nutrition found";
+                break;
+            }
+        }
+        for(auto j = nutrition.begin(); j !=nutrition.end(); j++){
 
-        auto k = a.begin(); //first array named "foods"
+            QJsonObject v = j->toObject();
+            for (auto m = v.begin(); m != v.end(); ++m) {
+                if(m.value() == "Calories"){
+                    nutrResult.append("calories");
+                    //FIX THIS
+                }
+            }
 
-        QJsonObject rObject = k->toObject();
-        double d;
-        QJsonValue r;
-        if(rObject.isEmpty())
-            empty = true;
-        if(rObject.contains("serving_qty")){
-            r = rObject.value("serving_qty");
-            d = r.toDouble();
-            nutrResult.append("Serving Quantity: " + QString::number(d) +"   ");
         }
-        if(rObject.contains("serving_unit")){
-            r = rObject.value("serving_unit");
-            nutrResult.append("Serving Unit: " + r.toString()+"   ");
-        }
-        if(rObject.contains("serving_weight_grams")){
-            r = rObject.value("serving_weight_grams");
-            d = r.toDouble();
-            nutrResult.append("Weight(g): " + QString::number(d)+"   ");
-        }
-        if(rObject.contains("nf_calories")){
-            r = rObject.value("nf_calories");
-            d = r.toDouble();
-            nutrResult.append("Calories: " + QString::number(d)+"   ");
-        }
-        if(rObject.contains("nf_total_fat")){
-            r = rObject.value("nf_total_fat");
-            d = r.toDouble();
-            nutrResult.append("Fat: " + QString::number(d)+"   ");
-        }
-        if(rObject.contains("nf_total_carbohydrate")){
-            r = rObject.value("nf_total_carbohydrate");
-            d = r.toDouble();
-            nutrResult.append("Carbs: " + QString::number(d)+"   ");
-        }
-        if(rObject.contains("nf_protein")){
-            r = rObject.value("nf_protein");
-            d = r.toDouble();
-            nutrResult.append("Protein: " + QString::number(d)+"   ");
-        }
-
-    if(empty)
-        qDebug() << "No results.";
-    else{
-        qDebug() << nutrResult;
+        qDebug() << "Nutrition result:" + nutrResult;
         ui->nutritionFood->setText(nutrResult);
-    }
+
 }
 
 

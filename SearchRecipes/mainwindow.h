@@ -20,7 +20,7 @@ public:
     void getSearchResults(QString textQuery);
     void populateSearchResults(QJsonArray &a);
     void getFoodNutrients(QString foodName);
-    void showNutrients(QJsonArray &a);
+    void showNutrients(QJsonObject &obj);
 private slots:
     void on_pushButton_clicked();
     void on_listWidget_itemClicked(QListWidgetItem *item);
