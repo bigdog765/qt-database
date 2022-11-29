@@ -205,8 +205,24 @@ void MainWindow::showNutrients(QJsonObject &obj){
             QJsonObject v = j->toObject();
             for (auto m = v.begin(); m != v.end(); ++m) {
                 if(m.value() == "Calories"){
-                    nutrResult.append("calories");
-                    //FIX THIS
+                    nutrResult.append("Calories: ");
+                }
+                else if(m.value() == "Protein"){
+                    nutrResult.append("Protein: ");
+                }
+                else if(m.value() == "Carbohydrates"){
+                    nutrResult.append("Protein: ");
+                }
+                else if(m.value() == "Fat"){
+                    nutrResult.append("Fat: ");
+                }
+
+                if(m.key() == "amount"){
+                    double b = m.value().toDouble();
+                    nutrResult.append(QString::number(b));
+                }
+                if(m.key() == "amountUnit"){
+                    nutrResult.append(m.value().toString());
                 }
             }
 
